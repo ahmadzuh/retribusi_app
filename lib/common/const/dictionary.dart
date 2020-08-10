@@ -1,7 +1,11 @@
 class Dictionary {
+  //app name
   static String appName = 'Retribusi App';
+  static String subTitle = 'Aplikasi Retribusi Pencatat Keuangan';
 
-  static String lokasiKantor = 'Kantor Retribusi';
+  //app menu
+  static String infoTagihan = 'Info Tagihan';
 
-  static String loginText = 'Login';
+  //menu
+  static String otherMenus = 'Menu lainnya';
 }
