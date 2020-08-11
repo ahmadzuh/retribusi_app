@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/widgets/custom_list_tile.dart';
+import 'package:retribusi_app/ui/widget/custom_list_tile.dart';
 
 class History extends StatelessWidget {
   @override

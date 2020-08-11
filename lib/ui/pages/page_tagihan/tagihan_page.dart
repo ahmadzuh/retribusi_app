@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:retribusi_app/common/const/color.dart';
-import 'package:retribusi_app/common/environment/environment.dart';
-import 'package:retribusi_app/common/util/clock_time.dart';
-import 'package:retribusi_app/widgets/custom_list_tile.dart';
+import 'package:retribusi_app/ui/common/const/color.dart';
+import 'package:retribusi_app/ui/common/environment/environment.dart';
+import 'package:retribusi_app/ui/common/util/clock_time.dart';
+import 'package:retribusi_app/ui/widget/custom_list_tile.dart';
 
 class Tagihan extends StatelessWidget {
   @override

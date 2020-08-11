@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/common/const/font.dart';
-import 'package:retribusi_app/common/environment/environment.dart';
-import 'package:retribusi_app/common/route/router.gr.dart';
+import 'package:provider/provider.dart';
+import 'package:retribusi_app/bloc/providers/user_provider.dart';
+import 'package:retribusi_app/ui/common/const/dictionary.dart';
+import 'package:retribusi_app/ui/common/const/font.dart';
+import 'package:retribusi_app/ui/common/environment/environment.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,128 +11,132 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(left: 26.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 50,
-              ),
-              Text(
-                "Selamat datang,",
-                style: TextStyle(
-                    fontFamily: FontsFamily.latoReguler,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 6,
-              ),
-              Text(
-                "Masuk untuk melanjutkan!",
-                style: TextStyle(
-                    fontFamily: FontsFamily.latoLight,
-                    fontSize: 20,
-                    color: Colors.grey.shade400),
-              ),
-              Image.asset('${Environment.imageAssets}image_login.png'),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 1, right: 20),
-                child: Column(
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        prefixStyle: TextStyle(
-                          color: Colors.blue,
-                        ),
-                        labelText: "Email ID",
-                        labelStyle: TextStyle(
-                            fontSize: 14, color: Colors.blue.shade400),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade300,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                            )),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.lock),
-                        prefixStyle: TextStyle(
-                          color: Colors.red,
-                        ),
-                        labelText: "Password",
-                        labelStyle: TextStyle(
-                            fontSize: 14, color: Colors.blue.shade400),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade300,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                            )),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      height: 50,
-                      width: double.infinity,
-                      child: FlatButton(
-                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                            context, Routes.homeScreen, (route) => false),
-                        padding: EdgeInsets.all(0),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: Colors.blueAccent),
-                          child: Container(
-                            alignment: Alignment.center,
-                            constraints: BoxConstraints(
-                                maxWidth: double.infinity, minHeight: 50),
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 26.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Text(Dictionary.selamatDatang,
+                      style: TextStyle(
+                        fontSize: 26.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: FontsFamily.latoReguler,
+                      )),
+                  SizedBox(height: 6.0),
+                  Text(Dictionary.appSubtitle,
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                          fontFamily: FontsFamily.openSansReguler,
+                          fontWeight: FontWeight.w300)),
+                  Image.asset('${Environment.imageAssets}image_login.png'),
+                  SizedBox(height: 20.0),
+                  Container(child: textSection(user)),
+                  buttonSection(context, user)
+                ]),
           ),
+        ),
+      ),
+    );
+  }
+
+  textSection(user) {
+    return Container(
+      padding: EdgeInsets.only(right: 14.0),
+      child: Column(
+        children: <Widget>[
+          txtEmail("Email", Icons.email, user),
+          SizedBox(height: 30.0),
+          txtPassword("Password", Icons.lock),
+        ],
+      ),
+    );
+  }
+
+  //textforField password
+  TextFormField txtEmail(String title, IconData icon, user) {
+    return TextFormField(
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'Please enter email';
+        } else if (!value.contains('@')) {
+          return 'Please enter valid email';
+        }
+        return null;
+      },
+      controller: emailController,
+      style: TextStyle(color: Colors.blue),
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.email),
+        border: OutlineInputBorder(),
+        labelText: title,
+        hintStyle: TextStyle(color: Colors.grey),
+      ),
+    );
+  }
+
+  //textforField password
+  TextFormField txtPassword(String title, IconData icon) {
+    return TextFormField(
+      onChanged: null,
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'Please enter password';
+        }
+        return null;
+      },
+      controller: passwordController,
+      obscureText: true,
+      style: TextStyle(color: Colors.blue),
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.lock),
+        focusColor: Colors.green,
+        border: OutlineInputBorder(),
+        labelText: title,
+        hintStyle: TextStyle(color: Colors.grey),
+//        icon: Icon(icon),
+      ),
+    );
+  }
+
+  buttonSection(context, user) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 40.0,
+      margin: EdgeInsets.only(top: 30.0, right: 14),
+      child: RaisedButton(
+        elevation: 0,
+        onPressed: () {
+          if (_formKey.currentState.validate()) {
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text('Signing in ')));
+            user.loginUser(emailController.text, passwordController.text);
+          }
+        },
+        color: Colors.blue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: Text(
+          'Sign In',
+          style: TextStyle(color: Colors.white70),
         ),
       ),
     );

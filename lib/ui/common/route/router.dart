@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:retribusi_app/ui/main_ui.dart';
 import 'package:retribusi_app/ui/screen/home_screen.dart';
 import 'package:retribusi_app/ui/screen/login_screen.dart';
-
-import '../../main.dart';
 
 @MaterialAutoRouter()
 class $Router {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:retribusi_app/common/const/color.dart';
+import 'package:retribusi_app/ui/common/const/color.dart';
 
 // Colors
 const kBackgroundColor = Color(0xFFFEFEFE);

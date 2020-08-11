@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:retribusi_app/common/const/color.dart';
-import 'package:retribusi_app/common/const/dictionary.dart';
-import 'package:retribusi_app/common/environment/environment.dart';
-import 'package:retribusi_app/ui/pages/history_page.dart';
-import 'package:retribusi_app/ui/pages/setoran_page.dart';
-import 'package:retribusi_app/ui/pages/tagihan_page.dart';
+import 'package:retribusi_app/ui/common/const/color.dart';
+import 'package:retribusi_app/ui/common/const/dictionary.dart';
+import 'package:retribusi_app/ui/common/environment/environment.dart';
+import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
+import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
+import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Image.asset('${Environment.imageAssets}app.png',
+                Image.asset('${Environment.iconAssets}logo.png',
                     width: 40.0, height: 40.0),
                 Container(
                     padding: const EdgeInsets.all(10.0),
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                         Padding(
                           padding: EdgeInsets.only(top: 4.0),
-                          child: Text(Dictionary.subTitle,
+                          child: Text(Dictionary.appSubtitle,
                               style: GoogleFonts.roboto(
                                 color: Colors.white,
                                 fontSize: 8.0,
