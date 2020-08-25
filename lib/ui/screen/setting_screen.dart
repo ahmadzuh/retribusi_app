@@ -18,7 +18,11 @@ class _SettingScreenState extends State<SettingScreen> {
       body: Container(
         child: Center(
           child: FlatButton(
-              onPressed: () => userLogOut.signOut(), child: Text('Keluar')),
+              onPressed: () {
+                userLogOut.signOut();
+                Navigator.pop(context);
+              },
+              child: Text('Keluar')),
         ),
       ),
     );

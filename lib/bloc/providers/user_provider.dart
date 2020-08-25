@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:retribusi_app/bloc/viewModel/area_tagih.dart';
 import 'package:retribusi_app/bloc/viewModel/user_model.dart';
 import 'package:retribusi_app/network/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,22 +40,13 @@ class UserProvider with ChangeNotifier {
     return null;
   }
 
-  // Future<User> changePassword(
-  //     String old_password, new_password, confirm_new_password) async {
-  //   final result = await Webservice()
-  //       .changePassword(old_password, new_password, confirm_new_password);
-
-  //   print("Password change success");
-  //   print(result);
-  //   notifyListeners();
-  // }
-
   setUserToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString("status", user.status);
+
     await sharedPreferences.setString("email", user.data.email);
     await sharedPreferences.setString("name", user.data.name);
 
-    await sharedPreferences.setString("status", user.status);
     await sharedPreferences.setString("token", user.token);
 
     notifyListeners();
@@ -95,26 +87,42 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //fungsi delete token
+  Future signOut() async {
+    deleteUserToken();
+
+    notifyListeners();
+    return Future.delayed(Duration.zero); // need for type return
+  }
+
+  List<AreaTagih> areaTagih() {
+    return null;
+  }
+
+  // Future<User> changePassword(
+  //     String old_password, new_password, confirm_new_password) async {
+  //   final result = await Webservice()
+  //       .changePassword(old_password, new_password, confirm_new_password);
+
+  //   print("Password change success");
+  //   print(result);
+  //   notifyListeners();
+  // }
+
+  /*Validasi Textformfield */
   String validateEmail(String value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = new RegExp(pattern);
     if (value.length == 0) {
       notifyListeners();
-      return "Email is Required";
+      return 'Email dibutuhkan';
     } else if (!regExp.hasMatch(value)) {
       notifyListeners();
-      return "Invalid Email";
+      return 'Email salah';
     } else {
       notifyListeners();
       return null;
     }
-  }
-
-  Future signOut() async {
-    deleteUserToken();
-
-    notifyListeners();
-    return Future.delayed(Duration.zero); // need for type return
   }
 }

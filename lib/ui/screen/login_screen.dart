@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:retribusi_app/bloc/providers/user_provider.dart';
 import 'package:retribusi_app/ui/common/const/dictionary.dart';
@@ -15,6 +16,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+
+  // Initially password is obscure
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +85,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextFormField(
       validator: (value) {
         if (value.isEmpty) {
-          return 'Please enter email';
+          return 'Email harus diisi.';
         } else if (!value.contains('@')) {
-          return 'Please enter valid email';
+          return 'Format alamat email salah. Mohon periksa kembali.';
         }
         return null;
       },
@@ -97,12 +108,12 @@ class _LoginScreenState extends State<LoginScreen> {
       onChanged: null,
       validator: (value) {
         if (value.isEmpty) {
-          return 'Please enter password';
+          return 'Password harus diisi.';
         }
         return null;
       },
       controller: passwordController,
-      obscureText: true,
+      obscureText: _obscureText,
       style: TextStyle(color: Colors.blue),
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.lock),
@@ -110,7 +121,16 @@ class _LoginScreenState extends State<LoginScreen> {
         border: OutlineInputBorder(),
         labelText: title,
         hintStyle: TextStyle(color: Colors.grey),
-//        icon: Icon(icon),
+        suffixIcon: IconButton(
+          icon: Icon(
+            // Based on passwordVisible state choose the icon
+            _obscureText ? Icons.visibility_off : Icons.visibility,
+            color: Theme.of(context).accentColor,
+          ),
+          onPressed: () {
+            _toggle();
+          },
+        ),
       ),
     );
   }
@@ -124,8 +144,10 @@ class _LoginScreenState extends State<LoginScreen> {
         elevation: 0,
         onPressed: () {
           if (_formKey.currentState.validate()) {
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Signing in ')));
+            ProgressDialog(context,
+                    type: ProgressDialogType.Normal, isDismissible: false)
+                .style(message: 'Mohon tunggu...');
+            ProgressDialog(context).show();
             user.loginUser(emailController.text, passwordController.text);
           }
         },
@@ -134,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Text(
-          'Sign In',
+          'Login',
           style: TextStyle(color: Colors.white70),
         ),
       ),
