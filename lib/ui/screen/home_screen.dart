@@ -6,6 +6,7 @@ import 'package:retribusi_app/ui/common/environment/environment.dart';
 import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
 import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
+import 'package:retribusi_app/ui/screen/setting_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
-
   final _widgetOptions = [
     Tagihan(),
     Setoran(),
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
           appBar: AppBar(
             elevation: 0.0,
-            backgroundColor: ColorBase.blue,
+            backgroundColor: ColorBase.bluebase,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -60,11 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             actions: <Widget>[
               GestureDetector(
-                onTap: () => print('object'),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingScreen()),
+                ),
                 child: Padding(
                     padding: EdgeInsets.only(right: 16.0),
                     child: Icon(
-                      Icons.exit_to_app,
+                      Icons.settings,
                       color: Colors.white,
                     )),
               )
@@ -73,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //If you want to show body behind the navbar, it should be true
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: ColorBase.blue,
+            selectedItemColor: ColorBase.bluebase,
             currentIndex: currentIndex,
             unselectedItemColor: Colors.grey,
             onTap: (val) {

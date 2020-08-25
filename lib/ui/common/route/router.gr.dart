@@ -7,19 +7,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:retribusi_app/main.dart';
 import 'package:retribusi_app/ui/main_ui.dart';
 import 'package:retribusi_app/ui/screen/login_screen.dart';
 import 'package:retribusi_app/ui/screen/home_screen.dart';
+import 'package:retribusi_app/ui/screen/setting_screen.dart';
 
 abstract class Routes {
   static const mainUI = '/';
   static const loginScreen = '/login-screen';
   static const homeScreen = '/home-screen';
+  static const settingScreen = '/setting-screen';
   static const all = {
     mainUI,
     loginScreen,
     homeScreen,
+    settingScreen,
   };
 }
 
@@ -47,6 +49,11 @@ class Router extends RouterBase {
       case Routes.homeScreen:
         return MaterialPageRoute<dynamic>(
           builder: (context) => HomeScreen(),
+          settings: settings,
+        );
+      case Routes.settingScreen:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => SettingScreen(),
           settings: settings,
         );
       default:

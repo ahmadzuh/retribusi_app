@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:retribusi_app/bloc/providers/user_provider.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
 import 'package:retribusi_app/ui/common/environment/environment.dart';
 import 'package:retribusi_app/ui/common/util/clock_time.dart';
-import 'package:retribusi_app/ui/widget/custom_list_tile.dart';
 
-class Tagihan extends StatelessWidget {
+class Tagihan extends StatefulWidget {
+  @override
+  _TagihanState createState() => _TagihanState();
+}
+
+class _TagihanState extends State<Tagihan> {
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserProvider>(context);
     return Scaffold(
         body: new Stack(children: <Widget>[
       Container(
         height: MediaQuery.of(context).size.height * 0.16,
-        color: ColorBase.blue,
+        color: ColorBase.bluebase,
       ),
       SizedBox(height: 5.0),
       ListView(
@@ -49,7 +56,7 @@ class Tagihan extends StatelessWidget {
                             Text(greeting(),
                                 style: GoogleFonts.openSans(fontSize: 20.0)),
                             SizedBox(height: 1.0),
-                            Text('Agus Sasono' ?? 'default_value',
+                            Text(userData.name ?? 'Data tidak ada',
                                 style: GoogleFonts.openSans(fontSize: 16.0)),
                             Padding(
                               padding: const EdgeInsets.only(top: 3.0),
@@ -73,21 +80,6 @@ class Tagihan extends StatelessWidget {
           ),
           SizedBox(
             height: 5,
-          ),
-          CustomListTileIcon(
-            icon: Icons.ac_unit,
-            title: 'Title',
-            subtitle: 'Subtitle',
-          ),
-          CustomListTileIcon(
-            icon: Icons.ac_unit,
-            title: 'Title',
-            subtitle: 'Subtitle',
-          ),
-          CustomListTileIcon(
-            icon: Icons.ac_unit,
-            title: 'Title',
-            subtitle: 'Subtitle',
           ),
         ],
       )

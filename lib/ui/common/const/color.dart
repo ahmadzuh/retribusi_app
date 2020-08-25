@@ -11,8 +11,7 @@ const mCardTitleColor = Color(0xFF2E4ECF);
 const mCardSubtitleColor = mTitleColor;
 
 class ColorBase {
-  static final blue = Color(0xFF00AADE);
-  static final greenbase = Color(0xff06ae9f);
+  static final bluebase = Color(0xff00aade);
   static final grey = Color(0xFFFAFAFA);
   static final pink = Color(0xFFD71149);
   static final bubbleChatBlue = Color(0xFFD5E9F4);

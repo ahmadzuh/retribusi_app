@@ -18,5 +18,6 @@ class MainUI extends StatelessWidget {
         body: Center(child: CircularProgressIndicator()),
       );
     }
+    return null;
   }
 }

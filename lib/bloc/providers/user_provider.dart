@@ -31,23 +31,23 @@ class UserProvider with ChangeNotifier {
     await setUserToken();
 
     //todo network validation
-
     _status = Status.Authenticated;
 
     print(user.status);
-
     notifyListeners();
+
+    return null;
   }
 
-  Future<User> changePassword(
-      String old_password, new_password, confirm_new_password) async {
-    final result = await Webservice()
-        .changePassword(old_password, new_password, confirm_new_password);
+  // Future<User> changePassword(
+  //     String old_password, new_password, confirm_new_password) async {
+  //   final result = await Webservice()
+  //       .changePassword(old_password, new_password, confirm_new_password);
 
-    print("Password change success");
-    print(result);
-    notifyListeners();
-  }
+  //   print("Password change success");
+  //   print(result);
+  //   notifyListeners();
+  // }
 
   setUserToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -62,7 +62,7 @@ class UserProvider with ChangeNotifier {
 
   getUserToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    this.token = await prefs.getString("token");
+    this.token = prefs.getString("token");
     if (token == null) {
       _status = Status.Unauthenticated;
     } else {
@@ -77,7 +77,6 @@ class UserProvider with ChangeNotifier {
     this.name = prefs.getString("name" ?? '');
 
     notifyListeners();
-
     return this.name;
   }
 
@@ -92,7 +91,7 @@ class UserProvider with ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
     await pref.clear();
     _status = Status.Unauthenticated;
-    print('tokendeleted');
+    print('Token Deleted $token');
     notifyListeners();
   }
 

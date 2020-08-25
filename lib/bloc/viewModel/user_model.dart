@@ -1,65 +1,51 @@
-import 'dart:convert';
-
-User userFromJson(String str) => User.fromJson(json.decode(str));
-
-String userToJson(User data) => json.encode(data.toJson());
-
 class User {
-  User({
-    this.status,
-    this.data,
-    this.token,
-  });
-
   String status;
   Data data;
   String token;
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        status: json["status"],
-        data: Data.fromJson(json["data"]),
-        token: json["token"],
-      );
+  User({this.status, this.data, this.token});
 
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "data": data.toJson(),
-        "token": token,
-      };
+  User.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    token = json['token'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data.toJson();
+    }
+    data['token'] = this.token;
+    return data;
+  }
 }
 
 class Data {
-  Data({
-    this.id,
-    this.name,
-    this.email,
-    this.areaTagih,
-    this.createdAt,
-    this.updatedAt,
-  });
-
   int id;
   String name;
   String email;
-  List<dynamic> areaTagih;
-  dynamic createdAt;
-  dynamic updatedAt;
+  Null createdAt;
+  Null updatedAt;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        id: json["id"],
-        name: json["name"],
-        email: json["email"],
-        areaTagih: List<dynamic>.from(json["area_tagih"].map((x) => x)),
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-      );
+  Data({this.id, this.name, this.email, this.createdAt, this.updatedAt});
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "email": email,
-        "area_tagih": List<dynamic>.from(areaTagih.map((x) => x)),
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-      };
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
 }

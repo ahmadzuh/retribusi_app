@@ -16,7 +16,7 @@ class _SetoranState extends State<Setoran> {
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height * 0.09,
-              color: ColorBase.blue,
+              color: ColorBase.bluebase,
               child: TabBar(
                 indicatorColor: Colors.white,
                 unselectedLabelColor: Colors.amberAccent,
