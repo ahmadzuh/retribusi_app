@@ -97,8 +97,12 @@ class UserProvider with ChangeNotifier {
   }
 
   //Fungsi Mengambil data List
-  Future<AreaTagih> areaTagih() async {
-    // final result = await Webservice().login(email, password);
+  Future<List<AreaTagih>> areaTagih() async {
+    String id, nama_pasar, kecamata_id, keterangan;
+    final result = await AreatagihService()
+        .areaTagih(id, nama_pasar, kecamata_id, keterangan);
+
+    print(result);
     return null;
   }
 

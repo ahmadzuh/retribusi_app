@@ -15,7 +15,10 @@ class Tagihan extends StatefulWidget {
 class _TagihanState extends State<Tagihan> {
   @override
   Widget build(BuildContext context) {
-    Areatagih().areaTagih().then((value) => print("value: $value"));
+    String id, namapasar, kecamatanid, keterangan;
+    AreatagihService()
+        .areaTagih(id, namapasar, kecamatanid, keterangan)
+        .then((value) => print("value: $value"));
     final userData = Provider.of<UserProvider>(context);
     return Scaffold(
         body: new Stack(children: <Widget>[

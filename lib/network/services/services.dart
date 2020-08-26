@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Webservice {
   UserModel userModel = UserModel();
-  Areatagih areatagih = Areatagih();
+  AreaTagihModel areatagih = AreaTagihModel();
 
   //Api Data Login
   Future<UserModel> login(String email, password) async {
@@ -30,19 +30,26 @@ class Webservice {
   }
 }
 
-class Areatagih {
+class AreatagihService {
   //Api Mengambil Data List
-  Future<List<AreaTagih>> areaTagih() async {
+  Future<List<AreaTagih>> areaTagih(String id, String namaPasar,
+      String kecamatanId, String keterangan) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString('token');
-    final response = await http.post(
-      ApiService.listUrl,
-      headers: {HttpHeaders.authorizationHeader: 'Bearer ' + token},
-    );
+    Map areaTagih = {
+      'id': id,
+      'nm_pasar': namaPasar,
+      'kecamatan_id': kecamatanId,
+      'keterangan': keterangan
+    };
+    final response = await http.post(ApiService.listUrl,
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+        body: areaTagih);
 
     if (response.statusCode == 200) {
       return areatagihFromJson(response.body);
     } else {
+      ToastUtils.show('Gagal Load Data');
       print(token);
     }
     return null;
