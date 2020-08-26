@@ -1,9 +1,15 @@
-class ListAreaTagih {
+import 'dart:convert';
+
+class AreaTagihModel {
+  bool status;
+  String message;
   List<AreaTagih> areaTagih;
 
-  ListAreaTagih({this.areaTagih});
+  AreaTagihModel({this.status, this.message, this.areaTagih});
 
-  ListAreaTagih.fromJson(Map<String, dynamic> json) {
+  AreaTagihModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
     if (json['area_tagih'] != null) {
       areaTagih = new List<AreaTagih>();
       json['area_tagih'].forEach((v) {
@@ -14,6 +20,8 @@ class ListAreaTagih {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
     if (this.areaTagih != null) {
       data['area_tagih'] = this.areaTagih.map((v) => v.toJson()).toList();
     }
@@ -44,4 +52,9 @@ class AreaTagih {
     data['keterangan'] = this.keterangan;
     return data;
   }
+}
+
+List<AreaTagih> areatagihFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<AreaTagih>.from(data.map((item) => AreaTagih.fromJson(item)));
 }

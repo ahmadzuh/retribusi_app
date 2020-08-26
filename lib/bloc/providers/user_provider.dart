@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:retribusi_app/bloc/viewModel/area_tagih.dart';
+import 'package:retribusi_app/bloc/viewModel/area_tagih_model.dart';
 import 'package:retribusi_app/bloc/viewModel/user_model.dart';
 import 'package:retribusi_app/network/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,11 +11,11 @@ class UserProvider with ChangeNotifier {
   Status _status = Status.Unauthenticated;
   String isAuth;
 
-  User user = User();
+  UserModel user = UserModel();
 
-  String token;
   String name;
   String email;
+  String token;
   String password;
 
   UserProvider() {
@@ -26,8 +26,10 @@ class UserProvider with ChangeNotifier {
   Future<bool> loginUser(String email, password) async {
     final result = await Webservice().login(email, password);
     _status = Status.Authenticating;
+
     this.user = result;
     this.name = user.data.name;
+    this.token = user.token;
 
     await setUserToken();
 
@@ -42,7 +44,7 @@ class UserProvider with ChangeNotifier {
 
   setUserToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString("status", user.status);
+    await sharedPreferences.setBool("status", user.status);
 
     await sharedPreferences.setString("email", user.data.email);
     await sharedPreferences.setString("name", user.data.name);
@@ -83,31 +85,22 @@ class UserProvider with ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
     await pref.clear();
     _status = Status.Unauthenticated;
-    print('Token Deleted $token');
+    print('Token di Hapus $token');
     notifyListeners();
   }
 
-  //fungsi delete token
+  //Fungsi delete token
   Future signOut() async {
     deleteUserToken();
-
     notifyListeners();
     return Future.delayed(Duration.zero); // need for type return
   }
 
-  List<AreaTagih> areaTagih() {
+  //Fungsi Mengambil data List
+  Future<AreaTagih> areaTagih() async {
+    // final result = await Webservice().login(email, password);
     return null;
   }
-
-  // Future<User> changePassword(
-  //     String old_password, new_password, confirm_new_password) async {
-  //   final result = await Webservice()
-  //       .changePassword(old_password, new_password, confirm_new_password);
-
-  //   print("Password change success");
-  //   print(result);
-  //   notifyListeners();
-  // }
 
   /*Validasi Textformfield */
   String validateEmail(String value) {
@@ -126,3 +119,13 @@ class UserProvider with ChangeNotifier {
     }
   }
 }
+
+// Future<User> changePassword(
+//     String old_password, new_password, confirm_new_password) async {
+//   final result = await Webservice()
+//       .changePassword(old_password, new_password, confirm_new_password);
+
+//   print("Password change success");
+//   print(result);
+//   notifyListeners();
+// }

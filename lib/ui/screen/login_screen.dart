@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:retribusi_app/bloc/providers/user_provider.dart';
 import 'package:retribusi_app/ui/common/const/dictionary.dart';
@@ -14,8 +13,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController emailController =
+      new TextEditingController(text: 'jurutagih@jambikota.go.id');
+  final TextEditingController passwordController =
+      new TextEditingController(text: 'jambiterkini');
 
   // Initially password is obscure
   bool _obscureText = true;
@@ -73,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         children: <Widget>[
           txtEmail("Email", Icons.email, user),
-          SizedBox(height: 30.0),
+          SizedBox(height: 16.0),
           txtPassword("Password", Icons.lock),
         ],
       ),
@@ -138,16 +139,15 @@ class _LoginScreenState extends State<LoginScreen> {
   buttonSection(context, user) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 40.0,
-      margin: EdgeInsets.only(top: 30.0, right: 14),
+      height: 50.0,
+      margin: EdgeInsets.only(top: 16.0, right: 14),
       child: RaisedButton(
         elevation: 0,
         onPressed: () {
           if (_formKey.currentState.validate()) {
-            ProgressDialog(context,
-                    type: ProgressDialogType.Normal, isDismissible: false)
-                .style(message: 'Mohon tunggu...');
-            ProgressDialog(context).show();
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text('Log In ')));
+
             user.loginUser(emailController.text, passwordController.text);
           }
         },

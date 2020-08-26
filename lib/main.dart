@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           primaryColor: ColorBase.bluebase,
-          primaryColorBrightness: Brightness.light,
+          primaryColorBrightness: Brightness.dark,
         ),
         debugShowCheckedModeBanner: false,
         title: 'Aplikasi Retribusi',

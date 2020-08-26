@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:retribusi_app/bloc/providers/user_provider.dart';
+import 'package:retribusi_app/network/services/services.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
 import 'package:retribusi_app/ui/common/environment/environment.dart';
 import 'package:retribusi_app/ui/common/util/clock_time.dart';
@@ -14,6 +15,7 @@ class Tagihan extends StatefulWidget {
 class _TagihanState extends State<Tagihan> {
   @override
   Widget build(BuildContext context) {
+    Areatagih().areaTagih().then((value) => print("value: $value"));
     final userData = Provider.of<UserProvider>(context);
     return Scaffold(
         body: new Stack(children: <Widget>[

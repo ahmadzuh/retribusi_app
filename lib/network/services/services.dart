@@ -1,18 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
-import 'package:retribusi_app/bloc/viewModel/area_tagih.dart';
+import 'package:retribusi_app/bloc/viewModel/area_tagih_model.dart';
 import 'package:retribusi_app/bloc/viewModel/user_model.dart';
 import 'package:retribusi_app/network/api/api.dart';
+import 'package:http/http.dart' as http;
+import 'package:retribusi_app/ui/common/util/toast_util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Webservice {
-  var token;
-  User user = User();
+  UserModel userModel = UserModel();
+  Areatagih areatagih = Areatagih();
 
-  AreaTagih areaTagih = AreaTagih();
-
-  Future<User> login(String email, password) async {
+  //Api Data Login
+  Future<UserModel> login(String email, password) async {
     Map userdata = {
       'email': email,
       'password': password,
@@ -21,23 +22,30 @@ class Webservice {
     final response = await http.post(ApiService.loginUrl, body: userdata);
     if (response.statusCode == 200) {
       print(response.body);
-      return User.fromJson(json.decode(response.body));
+      return UserModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Gagal Load Data User Login');
+      ToastUtils.show('Gagal Load Data');
     }
+    return null;
   }
+}
 
-  Future<AreaTagih> tagihan() async {
+class Areatagih {
+  //Api Mengambil Data List
+  Future<List<AreaTagih>> areaTagih() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    var token = sharedPreferences.getString('token');
     final response = await http.post(
       ApiService.listUrl,
       headers: {HttpHeaders.authorizationHeader: 'Bearer ' + token},
     );
 
     if (response.statusCode == 200) {
-      return AreaTagih.fromJson(json.decode(response.body));
+      return areatagihFromJson(response.body);
     } else {
-      throw Exception('Gagal Load Data AreaTagih List');
+      print(token);
     }
+    return null;
   }
 }
 
