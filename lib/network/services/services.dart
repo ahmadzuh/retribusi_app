@@ -36,15 +36,11 @@ class AreatagihService {
       String kecamatanId, String keterangan) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString('token');
-    Map areaTagih = {
-      'id': id,
-      'nm_pasar': namaPasar,
-      'kecamatan_id': kecamatanId,
-      'keterangan': keterangan
-    };
-    final response = await http.post(ApiService.listUrl,
-        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
-        body: areaTagih);
+
+    final response = await http.post(
+      ApiService.listUrl,
+      headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+    );
 
     if (response.statusCode == 200) {
       return areatagihFromJson(response.body);
