@@ -53,8 +53,3 @@ class AreaTagih {
     return data;
   }
 }
-
-List<AreaTagih> areatagihFromJson(String jsonData) {
-  final data = json.decode(jsonData);
-  return List<AreaTagih>.from(data.map((item) => AreaTagih.fromJson(item)));
-}

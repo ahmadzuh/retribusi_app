@@ -32,18 +32,21 @@ class Webservice {
 
 class AreatagihService {
   //Api Mengambil Data List
-  Future<List<AreaTagih>> areaTagih(String id, String namaPasar,
-      String kecamatanId, String keterangan) async {
+  Future<List<AreaTagih>> areaTagih() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString('token');
 
-    final response = await http.post(
+    final response = await http.get(
       ApiService.listUrl,
-      headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
 
     if (response.statusCode == 200) {
-      return areatagihFromJson(response.body);
+      print(response.body);
     } else {
       ToastUtils.show('Gagal Load Data');
       print(token);

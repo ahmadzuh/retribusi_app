@@ -98,10 +98,7 @@ class UserProvider with ChangeNotifier {
 
   //Fungsi Mengambil data List
   Future<List<AreaTagih>> areaTagih() async {
-    String id, nama_pasar, kecamata_id, keterangan;
-    final result = await AreatagihService()
-        .areaTagih(id, nama_pasar, kecamata_id, keterangan);
-
+    final result = await AreatagihService().areaTagih();
     print(result);
     return null;
   }
