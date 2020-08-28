@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:retribusi_app/bloc/viewModel/area_tagih_model.dart';
 import 'package:retribusi_app/bloc/viewModel/user_model.dart';
 import 'package:retribusi_app/network/api/api.dart';
@@ -10,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Webservice {
   UserModel userModel = UserModel();
-  AreaTagihModel areatagih = AreaTagihModel();
+  AreaTagih areatagih = AreaTagih();
 
   //Api Data Login
   Future<UserModel> login(String email, password) async {
@@ -28,31 +26,33 @@ class Webservice {
     }
     return null;
   }
+
+  //getData from Api to List
+  Future<List<AreaTagih>> areaTagih() async {
+    try {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      var token = sharedPreferences.getString('token');
+      final response = await http.get(
+        ApiService.listUrl,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      final responseJson = jsonDecode(response.body);
+
+      print(responseJson);
+      return parseJson(response.body);
+    } catch (e) {
+      ToastUtils.show('Error mengambil data $e');
+    }
+  }
 }
 
-class AreatagihService {
-  //Api Mengambil Data List
-  Future<List<AreaTagih>> areaTagih() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    var token = sharedPreferences.getString('token');
-
-    final response = await http.get(
-      ApiService.listUrl,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print(response.body);
-    } else {
-      ToastUtils.show('Gagal Load Data');
-      print(token);
-    }
-    return null;
-  }
+List<AreaTagih> parseJson(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+  return parsed.map<AreaTagih>((json) => AreaTagih.fromJson(json)).toList();
 }
 
 //   Future<User> changePassword(

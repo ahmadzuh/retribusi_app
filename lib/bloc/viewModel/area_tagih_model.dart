@@ -1,55 +1,57 @@
 import 'dart:convert';
 
-class AreaTagihModel {
+AreaModel areaModelFromJson(String str) => AreaModel.fromJson(json.decode(str));
+String areaModelToJson(AreaModel data) => json.encode(data.toJson());
+
+class AreaModel {
+  AreaModel({
+    this.status,
+    this.message,
+    this.areaTagih,
+  });
+
   bool status;
   String message;
   List<AreaTagih> areaTagih;
 
-  AreaTagihModel({this.status, this.message, this.areaTagih});
+  factory AreaModel.fromJson(Map<String, dynamic> json) => AreaModel(
+        status: json["status"],
+        message: json["message"],
+        areaTagih: List<AreaTagih>.from(
+            json["area_tagih"].map((x) => AreaTagih.fromJson(x))),
+      );
 
-  AreaTagihModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['area_tagih'] != null) {
-      areaTagih = new List<AreaTagih>();
-      json['area_tagih'].forEach((v) {
-        areaTagih.add(new AreaTagih.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.areaTagih != null) {
-      data['area_tagih'] = this.areaTagih.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "area_tagih": List<dynamic>.from(areaTagih.map((x) => x.toJson())),
+      };
 }
 
 class AreaTagih {
+  AreaTagih({
+    this.id,
+    this.nmPasar,
+    this.kecamatanId,
+    this.keterangan,
+  });
+
   int id;
   String nmPasar;
   int kecamatanId;
-  Null keterangan;
+  dynamic keterangan;
 
-  AreaTagih({this.id, this.nmPasar, this.kecamatanId, this.keterangan});
+  factory AreaTagih.fromJson(Map<String, dynamic> json) => AreaTagih(
+        id: json["id"],
+        nmPasar: json["nm_pasar"],
+        kecamatanId: json["kecamatan_id"],
+        keterangan: json["keterangan"],
+      );
 
-  AreaTagih.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nmPasar = json['nm_pasar'];
-    kecamatanId = json['kecamatan_id'];
-    keterangan = json['keterangan'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nm_pasar'] = this.nmPasar;
-    data['kecamatan_id'] = this.kecamatanId;
-    data['keterangan'] = this.keterangan;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "nm_pasar": nmPasar,
+        "kecamatan_id": kecamatanId,
+        "keterangan": keterangan,
+      };
 }
