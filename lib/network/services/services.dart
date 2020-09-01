@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:retribusi_app/bloc/viewModel/area_tagih_model.dart';
 import 'package:retribusi_app/bloc/viewModel/user_model.dart';
 import 'package:retribusi_app/network/api/api.dart';
@@ -27,33 +28,50 @@ class Webservice {
     return null;
   }
 
-  //getData from Api to List
+  /*getData from Api to List*/
   Future<List<AreaTagih>> areaTagih() async {
-    try {
-      final sharedPreferences = await SharedPreferences.getInstance();
-      var token = sharedPreferences.getString('token');
-      final response = await http.get(
-        ApiService.listUrl,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
-      final responseJson = jsonDecode(response.body);
+    final sharedPreferences = await SharedPreferences.getInstance();
+    var token = sharedPreferences.getString('token');
+    final response = await http.get(
+      ApiService.listUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
 
-      print(responseJson);
-      return parseJson(response.body);
-    } catch (e) {
-      ToastUtils.show('Error mengambil data $e');
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body)['area_tagih'];
+      print(jsonResponse);
+      return jsonResponse.map((job) => new AreaTagih.fromJson(job)).toList();
+    } else {
+      throw Exception('Failed to load jobs from API');
     }
   }
 }
 
-List<AreaTagih> parseJson(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-  return parsed.map<AreaTagih>((json) => AreaTagih.fromJson(json)).toList();
+ListView jobsListView(data) {
+  return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        return _tile(data[index].nmPasar, data[index].keterangan, Icons.work);
+      });
 }
+
+ListTile _tile(String title, String subtitle, IconData icon) => ListTile(
+      title: Text(title,
+          style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+              ) ??
+              'default value'),
+      subtitle: Text(subtitle) ?? 'default_value',
+      leading: Icon(
+        icon,
+        color: Colors.blue[500],
+      ),
+    );
 
 //   Future<User> changePassword(
 //       String old_password, new_password, confirm_new_password) async {

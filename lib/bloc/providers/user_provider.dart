@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:retribusi_app/bloc/viewModel/area_tagih_model.dart';
 import 'package:retribusi_app/bloc/viewModel/user_model.dart';
 import 'package:retribusi_app/network/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -94,13 +93,6 @@ class UserProvider with ChangeNotifier {
     deleteUserToken();
     notifyListeners();
     return Future.delayed(Duration.zero); // need for type return
-  }
-
-  //Fungsi Mengambil data List
-  Future<List<AreaTagih>> areaTagih() async {
-    final result = await Webservice().areaTagih();
-    print(result);
-    return null;
   }
 
   /*Validasi Textformfield */

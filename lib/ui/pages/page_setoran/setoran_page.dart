@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/network/services/services.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
 
 class Setoran extends StatefulWidget {
@@ -10,7 +9,6 @@ class Setoran extends StatefulWidget {
 class _SetoranState extends State<Setoran> {
   @override
   Widget build(BuildContext context) {
-    Webservice().areaTagih().then((value) => print("value: $value"));
     return Scaffold(
       body: DefaultTabController(
         length: 2,

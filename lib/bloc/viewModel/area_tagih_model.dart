@@ -41,11 +41,11 @@ class AreaTagih {
   int kecamatanId;
   dynamic keterangan;
 
-  factory AreaTagih.fromJson(Map<String, dynamic> json) => AreaTagih(
-        id: json["id"],
-        nmPasar: json["nm_pasar"],
-        kecamatanId: json["kecamatan_id"],
-        keterangan: json["keterangan"],
+  factory AreaTagih.fromJson(Map<String, dynamic> parsedJson) => AreaTagih(
+        id: parsedJson["id"],
+        nmPasar: parsedJson["nm_pasar"],
+        kecamatanId: parsedJson["kecamatan_id"],
+        keterangan: parsedJson["keterangan"],
       );
 
   Map<String, dynamic> toJson() => {
