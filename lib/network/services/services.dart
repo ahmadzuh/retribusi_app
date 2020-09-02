@@ -46,6 +46,7 @@ class Webservice {
       print(jsonResponse);
       return jsonResponse.map((job) => new AreaTagih.fromJson(job)).toList();
     } else {
+      ToastUtils.show('Gagal load data');
       throw Exception('Failed to load jobs from API');
     }
   }
