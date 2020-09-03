@@ -26,83 +26,88 @@ class _TagihanState extends State<Tagihan> {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserProvider>(context);
     return Scaffold(
-        body: new Stack(children: <Widget>[
-      Container(
-        height: MediaQuery.of(context).size.height * 0.20,
-        color: ColorBase.bluebase,
-      ),
-      Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 1.0),
-            child: Container(
-              padding: EdgeInsets.all(10.0),
-              color: Colors.transparent,
-              height: MediaQuery.of(context).size.height * 0.22,
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(width: 10.0),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(greeting(),
-                                style: GoogleFonts.lato(
-                                    fontSize: 28.0, color: ColorBase.white)),
-                            SizedBox(height: 1.0),
-                            Text(userData.name ?? 'Data tidak ada',
-                                style: GoogleFonts.inter(
-                                    fontSize: 19.0, color: ColorBase.white)),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 3.0),
-                              child: Text(dateString,
-                                  style: GoogleFonts.lato(
-                                      fontSize: 15.0, color: ColorBase.white)),
-                            ),
-                          ]),
-                    ),
-                  ]),
-            ),
-          ),
+        backgroundColor: Colors.white,
+        body: Stack(children: <Widget>[
           Container(
-            padding: EdgeInsets.only(left: 24, right: 23.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text('Daftar Tagihan',
-                    style: GoogleFonts.openSans(fontSize: 18.0)),
-              ],
-            ),
+            height: MediaQuery.of(context).size.height * 0.20,
+            color: ColorBase.bluebase,
           ),
-          Container(
-            child: Expanded(
-              child: FutureBuilder(
-                future: webservice.areaTagih(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<AreaTagih>> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text(
-                          "Something wrong with message: ${snapshot.error.toString()}"),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    List<AreaTagih> profiles = snapshot.data;
-                    return _buildListView(profiles);
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 1.0),
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  color: Colors.transparent,
+                  height: MediaQuery.of(context).size.height * 0.22,
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(width: 10.0),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(greeting(),
+                                    style: GoogleFonts.lato(
+                                        fontSize: 28.0,
+                                        color: ColorBase.white)),
+                                SizedBox(height: 1.0),
+                                Text(userData.name ?? 'Data tidak ada',
+                                    style: GoogleFonts.inter(
+                                        fontSize: 19.0,
+                                        color: ColorBase.white)),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 3.0),
+                                  child: Text(dateString,
+                                      style: GoogleFonts.lato(
+                                          fontSize: 15.0,
+                                          color: ColorBase.white)),
+                                ),
+                              ]),
+                        ),
+                      ]),
+                ),
               ),
-            ),
+              Container(
+                padding: EdgeInsets.only(left: 24, right: 23.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Daftar Tagihan',
+                        style: GoogleFonts.openSans(fontSize: 18.0)),
+                  ],
+                ),
+              ),
+              Container(
+                child: Expanded(
+                  child: FutureBuilder(
+                    future: webservice.areaTagih(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<AreaTagih>> snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(
+                              "Something wrong with message: ${snapshot.error.toString()}"),
+                        );
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        List<AreaTagih> profiles = snapshot.data;
+                        return _buildListView(profiles);
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ]));
+        ]));
   }
 
   Widget _buildListView(List<AreaTagih> areatagihs) {
