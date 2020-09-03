@@ -11,7 +11,7 @@ class Webservice {
   UserModel userModel = UserModel();
   AreaTagih areatagih = AreaTagih();
 
-  //Api Data Login
+  //Service Data untuk Login
   Future<UserModel> login(String email, password) async {
     Map userdata = {
       'email': email,
@@ -28,31 +28,61 @@ class Webservice {
     return null;
   }
 
-  /*getData from Api to List*/
+  /*Mendapatkan data dari API List Area tagih {Json object dan array}*/
   Future<List<AreaTagih>> areaTagih() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    var token = sharedPreferences.getString('token');
-    final response = await http.get(
-      ApiService.listUrl,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body)['area_tagih'];
-      print(jsonResponse);
-      return jsonResponse.map((job) => new AreaTagih.fromJson(job)).toList();
-    } else {
-      ToastUtils.show('Gagal load data');
-      throw Exception('Failed to load jobs from API');
+    try {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      var token = sharedPreferences.getString('token');
+      final response = await http.get(
+        ApiService.listUrl,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body)['area_tagih'];
+        print(jsonResponse);
+        return jsonResponse
+            .map((areatagih) => new AreaTagih.fromJson(areatagih))
+            .toList();
+      } else {
+        ToastUtils.show('Gagal mengambil data');
+        throw Exception('Failed to load Area Tagih from API');
+      }
+    } catch (e) {
+      print(e);
+      throw Exception('Data Error');
     }
   }
 }
 
-ListView jobsListView(data) {
+//   final sharedPreferences = await SharedPreferences.getInstance();
+//   var token = sharedPreferences.getString('token');
+//   final response = await http.get(
+//     ApiService.listUrl,
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Accept': 'application/json',
+//       'Authorization': 'Bearer $token',
+//     },
+//   );
+
+//   if (response.statusCode == 200) {
+//     List jsonResponse = json.decode(response.body)['area_tagih'];
+//     print(jsonResponse);
+//     return jsonResponse
+//         .map((areatagih) => new AreaTagih.fromJson(areatagih))
+//         .toList();
+//   } else {
+//     ToastUtils.show('Gagal mengambil data');
+//     throw Exception('Failed to load jobs from API');
+//   }
+// }
+
+//konversi respon dari API ke class model Area Tagih
+ListView areaTagihListView(data) {
   return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {
