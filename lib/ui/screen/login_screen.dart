@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.black,
                           fontFamily: FontsFamily.openSansReguler,
                           fontWeight: FontWeight.w300)),
-                  Image.asset('${Environment.imageAssets}image_login.png'),
+                  Image.asset('${Environment.imageAssets}login.png'),
                   SizedBox(height: 20.0),
                   Container(child: textSection(user)),
                   buttonSection(context, user)
@@ -147,7 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
           if (_formKey.currentState.validate()) {
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text('Log In ')));
-
             user.loginUser(emailController.text, passwordController.text);
           }
         },

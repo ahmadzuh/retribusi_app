@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:retribusi_app/bloc/providers/user_provider.dart';
-import 'package:retribusi_app/bloc/viewModel/area_tagih_model.dart';
+import 'package:retribusi_app/bloc/viewModel/testing_new_model.dart';
 import 'package:retribusi_app/network/services/services.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
 import 'package:retribusi_app/ui/common/util/clock_time.dart';
@@ -131,12 +131,12 @@ class _TagihanState extends State<Tagihan> {
                     children: <Widget>[
                       Text(
                             areaTagih.nmPasar,
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16.0),
                           ) ??
                           null,
-                      Text(areaTagih.id.toString()) ?? null,
-                      SizedBox(height: 2.0),
-                      Text(areaTagih.kecamatanId.toString()) ?? null,
+                      Text(areaTagih.kecamatan.nmKecamatan),
+                      SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[

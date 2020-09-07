@@ -4,9 +4,9 @@ import 'package:retribusi_app/ui/common/const/color.dart';
 import 'package:retribusi_app/ui/common/const/dictionary.dart';
 import 'package:retribusi_app/ui/common/environment/environment.dart';
 import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
+import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
 import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
-import 'package:retribusi_app/ui/screen/setting_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,11 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
-  final _widgetOptions = [
-    Tagihan(),
-    Setoran(),
-    History(),
-  ];
+  final _widgetOptions = [Tagihan(), Setoran(), History(), Pengaturan()];
 
   @override
   Widget build(BuildContext context) {
@@ -59,20 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     )),
               ],
             ),
-            actions: <Widget>[
-              GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingScreen()),
-                ),
-                child: Padding(
-                    padding: EdgeInsets.only(right: 16.0),
-                    child: Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                    )),
-              )
-            ],
           ),
           //If you want to show body behind the navbar, it should be true
           bottomNavigationBar: BottomNavigationBar(
@@ -91,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(Icons.get_app), title: new Text('Setoran')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.history), title: new Text('History')),
-              // BottomNavigationBarItem(
-              //     icon: Icon(Icons.exit_to_app), title: new Text('Keluar')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), title: new Text('Akun')),
             ],
           ),
           body: _widgetOptions.elementAt(currentIndex)),

@@ -29,7 +29,10 @@ class _SetoranState extends State<Setoran> {
             ),
             TabBarView(
               children: [
-                Icon(Icons.directions_car),
+                Icon(
+                  Icons.directions_car,
+                  color: Colors.white,
+                ),
                 Icon(Icons.directions_transit),
               ],
             ),

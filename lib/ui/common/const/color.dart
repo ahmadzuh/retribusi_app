@@ -19,6 +19,9 @@ class ColorBase {
 
   static final white = Color(0xffffffff);
 
+  static final darkGrey = Color(0xff828282);
+  static final veryDarkGrey = Color(0xff333333);
+
   static final gradientGreen = [Color(0xff06ae9f), Color(0xff9ed8ce)];
   static final gradientBlue = [Color(0xFF00AADE), Color(0xFF0669B1)];
   static final gradientBlueToPurple = [Color(0xFF005C97), Color(0xFF363795)];
