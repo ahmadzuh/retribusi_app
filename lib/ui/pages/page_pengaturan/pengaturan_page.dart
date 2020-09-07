@@ -5,6 +5,7 @@ import 'package:retribusi_app/ui/common/const/color.dart';
 import 'package:retribusi_app/ui/common/const/font.dart';
 import 'package:retribusi_app/ui/common/environment/environment.dart';
 import 'package:retribusi_app/ui/common/route/router.gr.dart';
+import 'package:retribusi_app/ui/widget/custom_appbar.dart';
 
 class Pengaturan extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _PengaturanState extends State<Pengaturan> {
     final userData = Provider.of<UserProvider>(context);
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: CustomAppBar.defaultAppBar(title: 'Akun'),
         body: ListView(
           children: <Widget>[
             SizedBox(

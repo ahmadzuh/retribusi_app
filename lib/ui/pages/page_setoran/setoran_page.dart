@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
+import 'package:retribusi_app/ui/widget/custom_appbar.dart';
 
 class Setoran extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class _SetoranState extends State<Setoran> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar.defaultAppBar(title: 'Setoran'),
       body: DefaultTabController(
         length: 2,
         child: Stack(
@@ -19,7 +21,7 @@ class _SetoranState extends State<Setoran> {
               color: ColorBase.bluebase,
               child: TabBar(
                 indicatorColor: Colors.white,
-                unselectedLabelColor: Colors.amberAccent,
+                unselectedLabelColor: Colors.blueGrey,
                 labelColor: Colors.white,
                 tabs: [
                   Tab(text: 'Menu 1', icon: Icon(Icons.directions_car)),
@@ -31,7 +33,7 @@ class _SetoranState extends State<Setoran> {
               children: [
                 Icon(
                   Icons.directions_car,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 Icon(Icons.directions_transit),
               ],

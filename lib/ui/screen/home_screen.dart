@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
-import 'package:retribusi_app/ui/common/const/dictionary.dart';
-import 'package:retribusi_app/ui/common/environment/environment.dart';
 import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
 import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
 import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
@@ -23,39 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 3,
       child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            elevation: 0.0,
-            backgroundColor: ColorBase.bluebase,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image.asset('${Environment.iconAssets}logo.png',
-                    width: 40.0, height: 40.0),
-                Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(Dictionary.appName,
-                            style: GoogleFonts.roboto(
-                              color: Colors.white,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w600,
-                            )),
-                        Padding(
-                          padding: EdgeInsets.only(top: 4.0),
-                          child: Text(Dictionary.appSubtitle,
-                              style: GoogleFonts.roboto(
-                                color: Colors.white,
-                                fontSize: 8.0,
-                                fontWeight: FontWeight.w600,
-                              )),
-                        )
-                      ],
-                    )),
-              ],
-            ),
-          ),
+
           //If you want to show body behind the navbar, it should be true
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:retribusi_app/ui/widget/custom_appbar.dart';
 
 class History extends StatefulWidget {
   @override
@@ -8,9 +9,8 @@ class History extends StatefulWidget {
 class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Container(
-      color: Colors.white,
-    ));
+    return Scaffold(
+      appBar: CustomAppBar.defaultAppBar(title: 'History'),
+    );
   }
 }

@@ -5,6 +5,9 @@ import 'package:retribusi_app/bloc/providers/user_provider.dart';
 import 'package:retribusi_app/bloc/viewModel/testing_new_model.dart';
 import 'package:retribusi_app/network/services/services.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
+import 'package:retribusi_app/ui/common/const/dictionary.dart';
+import 'package:retribusi_app/ui/common/const/font.dart';
+import 'package:retribusi_app/ui/common/environment/environment.dart';
 import 'package:retribusi_app/ui/common/util/clock_time.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/detail_tagihan.dart';
 
@@ -27,6 +30,44 @@ class _TagihanState extends State<Tagihan> {
     final userData = Provider.of<UserProvider>(context);
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          brightness: Brightness.light,
+          elevation: 0.0,
+          backgroundColor: ColorBase.bluebase,
+          title: Row(
+            children: <Widget>[
+              Image.asset('${Environment.iconAssets}logo.png',
+                  width: 40.0, height: 40.0),
+              Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        Dictionary.appName,
+                        style: TextStyle(
+                            fontFamily: FontsFamily.productSans,
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w600),
+                        maxLines: 1,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 4.0),
+                        child: Text(
+                          Dictionary.appSubtitle,
+                          style: TextStyle(
+                              fontFamily: FontsFamily.productSans,
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    ],
+                  ))
+            ],
+          ),
+        ),
         body: Stack(children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height * 0.20,
@@ -119,52 +160,53 @@ class _TagihanState extends State<Tagihan> {
           return Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.19,
+              height: MediaQuery.of(context).size.height * 0.14,
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                            areaTagih.nmPasar,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16.0),
-                          ) ??
-                          null,
-                      Text(areaTagih.kecamatan.nmKecamatan),
-                      SizedBox(height: 20.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        '${Environment.iconAssets}toko.png',
+                        scale: 8.0,
+                      ),
+                      SizedBox(width: 20.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          FlatButton(
-                            onPressed: () async {
-                              var result = await Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return TagihanDetail(areaTagih: areaTagih);
-                              }));
-                              if (result != null) {
-                                setState(() {});
-                              }
-                            },
-                            child: Text(
-                              "Selengkapnya",
-                              style: TextStyle(color: Colors.green),
-                            ),
-                          ),
-                          // FlatButton(
-                          //   onPressed: () {
-                          //     // TODO: do something in here
-                          //   },
-                          //   child: Text(
-                          //     "Edit",
-                          //     style: TextStyle(color: Colors.blue),
-                          //   ),
-                          // ),
+                          Text(
+                                areaTagih.nmPasar,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0),
+                              ) ??
+                              null,
+                          Text(areaTagih.kecamatan.nmKecamatan),
+                          SizedBox(height: 20.0),
                         ],
+                      ),
+                      SizedBox(width: 2.0),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: FlatButton(
+                          onPressed: () async {
+                            var result = await Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return TagihanDetail(areaTagih: areaTagih);
+                            }));
+                            if (result != null) {
+                              setState(() {});
+                            }
+                          },
+                          child: Text(
+                            "Selengkapnya",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        ),
                       ),
                     ],
                   ),
