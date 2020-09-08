@@ -16,7 +16,6 @@ class MainApp extends StatelessWidget {
           create: (_) => UserProvider(),
           lazy: false,
         ),
-
         //  ChangeNotifierProvider<SharedPrefs>(
         //    create: (_) => SharedPrefs(),
         //    lazy: false,
