@@ -93,6 +93,10 @@ flutter:
     - family: openSans-Reguler
       fonts:
         - asset: assets/fonts/OpenSans-Regular.ttf
+    
+    - family: product-sans
+      fonts:
+        - asset: assets/fonts/product-sans/Product-Sans-Regular.ttf
 
   #
   # For details regarding fonts from package dependencies,
