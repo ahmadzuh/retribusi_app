@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:retribusi_app/bloc/providers/user_provider.dart';
-import 'package:retribusi_app/bloc/viewModel/testing_new_model.dart';
-import 'package:retribusi_app/network/services/services.dart';
+import 'package:retribusi_app/bloc/view_model/area_tagih_model.dart';
+import 'package:retribusi_app/network/services/api_services.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
 import 'package:retribusi_app/ui/common/const/dictionary.dart';
 import 'package:retribusi_app/ui/common/const/font.dart';
@@ -130,8 +130,7 @@ class _TagihanState extends State<Tagihan> {
                         AsyncSnapshot<List<AreaTagih>> snapshot) {
                       if (snapshot.hasError) {
                         return Center(
-                          child: Text(
-                              "Something wrong with message: ${snapshot.error.toString()}"),
+                          child: Text("Error: ${snapshot.error.toString()}"),
                         );
                       } else if (snapshot.connectionState ==
                           ConnectionState.done) {
@@ -152,70 +151,72 @@ class _TagihanState extends State<Tagihan> {
   }
 
   Widget _buildListView(List<AreaTagih> areatagihs) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          AreaTagih areaTagih = areatagihs[index];
-          return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.14,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Image.asset(
-                        '${Environment.iconAssets}toko.png',
-                        scale: 8.0,
-                      ),
-                      SizedBox(width: 20.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                                areaTagih.nmPasar,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0),
-                              ) ??
-                              null,
-                          Text(areaTagih.kecamatan.nmKecamatan),
-                          SizedBox(height: 20.0),
-                        ],
-                      ),
-                      SizedBox(width: 2.0),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
-                        child: FlatButton(
-                          onPressed: () async {
-                            var result = await Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return TagihanDetail(areaTagih: areaTagih);
-                            }));
-                            if (result != null) {
-                              setState(() {});
-                            }
-                          },
-                          child: Text(
-                            "Selengkapnya",
-                            style: TextStyle(color: Colors.green),
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            AreaTagih areaTagih = areatagihs[index];
+            return Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.14,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          '${Environment.iconAssets}toko.png',
+                          scale: 8.0,
+                        ),
+                        SizedBox(width: 20.0),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                                  areaTagih.nmPasar,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.0),
+                                ) ??
+                                null,
+                            Text(areaTagih.kecamatan.nmKecamatan),
+                            SizedBox(height: 20.0),
+                          ],
+                        ),
+                        SizedBox(width: 2.0),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40.0),
+                          child: FlatButton(
+                            onPressed: () async {
+                              var result = await Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return TagihanDetail(areaTagih: areaTagih);
+                              }));
+                              if (result != null) {
+                                setState(() {});
+                              }
+                            },
+                            child: Text(
+                              "Selengkapnya",
+                              style: TextStyle(color: Colors.green),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
-        itemCount: areatagihs.length,
+            );
+          },
+          itemCount: areatagihs.length,
+        ),
       ),
     );
   }

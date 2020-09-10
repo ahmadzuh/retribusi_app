@@ -1,17 +1,16 @@
 // To parse this JSON data, do
 //
-//     final testingNewModel = testingNewModelFromJson(jsonString);
+//     final areaTagihModel = areaTagihModelFromJson(jsonString);
 
 import 'dart:convert';
 
-TestingNewModel testingNewModelFromJson(String str) =>
-    TestingNewModel.fromJson(json.decode(str));
+AreaTagihModel areaTagihModelFromJson(String str) =>
+    AreaTagihModel.fromJson(json.decode(str));
 
-String testingNewModelToJson(TestingNewModel data) =>
-    json.encode(data.toJson());
+String areaTagihModelToJson(AreaTagihModel data) => json.encode(data.toJson());
 
-class TestingNewModel {
-  TestingNewModel({
+class AreaTagihModel {
+  AreaTagihModel({
     this.status,
     this.message,
     this.areaTagih,
@@ -21,8 +20,7 @@ class TestingNewModel {
   String message;
   List<AreaTagih> areaTagih;
 
-  factory TestingNewModel.fromJson(Map<String, dynamic> json) =>
-      TestingNewModel(
+  factory AreaTagihModel.fromJson(Map<String, dynamic> json) => AreaTagihModel(
         status: json["status"],
         message: json["message"],
         areaTagih: List<AreaTagih>.from(

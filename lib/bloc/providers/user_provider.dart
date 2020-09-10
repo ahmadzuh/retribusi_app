@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:retribusi_app/bloc/viewModel/user_model.dart';
-import 'package:retribusi_app/network/services/services.dart';
+import 'package:retribusi_app/bloc/view_model/login_user_model.dart';
+import 'package:retribusi_app/network/services/api_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum Status { Authenticated, Authenticating, Unauthenticated }
@@ -10,7 +10,7 @@ class UserProvider with ChangeNotifier {
   Status _status = Status.Unauthenticated;
   String isAuth;
 
-  UserModel user = UserModel();
+  LoginUserModel user = LoginUserModel();
 
   String name;
   String email;

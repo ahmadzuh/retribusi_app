@@ -4,10 +4,10 @@ import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
 import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
 import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/detail_tagihan.dart';
+import 'package:retribusi_app/ui/pages/page_tagihan/kelompok_retribusi.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
 import 'package:retribusi_app/ui/screen/home_screen.dart';
 import 'package:retribusi_app/ui/screen/login_screen.dart';
-import 'package:retribusi_app/ui/screen/setting_screen.dart';
 
 @MaterialAutoRouter()
 class $Router {
@@ -18,7 +18,6 @@ class $Router {
   MainUI mainUI;
   LoginScreen loginScreen;
   HomeScreen homeScreen;
-  SettingScreen settingScreen;
 
   History history;
   Pengaturan pengaturan;
@@ -26,4 +25,5 @@ class $Router {
 
   Tagihan tagihan;
   TagihanDetail tagihanDetail;
+  KelompokRetribusi kelompokRetribusi;
 }
