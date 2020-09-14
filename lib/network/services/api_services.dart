@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:retribusi_app/bloc/view_model/area_tagih_model.dart';
 import 'package:retribusi_app/bloc/view_model/kelompok_retribusi_model.dart';
 import 'package:retribusi_app/bloc/view_model/login_user_model.dart';
+import 'package:retribusi_app/bloc/view_model/user_log_out_model.dart';
 import 'package:retribusi_app/network/api/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:retribusi_app/network/services/app_exceptions.dart';
@@ -36,7 +37,7 @@ class Webservice {
       final sharedPreferences = await SharedPreferences.getInstance();
       var token = sharedPreferences.getString('token');
 
-      final response = await http.get(ApiService.listUrl, headers: {
+      final response = await http.get(ApiService.areaTagih, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
@@ -65,11 +66,50 @@ class Webservice {
   }
 }
 
-Future<List<KelompokRetribusiModel>> kelompokRetribusi() async {
+class WebserviceLogOut {
+  UserLogOutModel userLogOut = UserLogOutModel();
+  Future userLogout(String token) async {
+    String baseUrl = "http://10.0.2.2:8000/api/auth/logout";
+
+    try {
+      var response = await http.post(baseUrl, headers: {
+        'Authorization': 'Bearer $token',
+        'Accept': 'applcation/json'
+      });
+
+      var resbody = json.decode(response.body);
+      return UserLogOutModel.fromJson(resbody);
+    } catch (e) {
+      return e;
+    }
+  }
+}
+
+Future<List<Datum>> kelompokRetribusi(AreaTagih data) async {
   try {
-    return null;
+    final sharedPreferences = await SharedPreferences.getInstance();
+    var token = sharedPreferences.getString('token');
+    final response = await http.get(
+      'https://retribusi.jambikota.go.id/api/v1/kelompok-retribusi/${data.id}',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body)['id'];
+      print(jsonResponse);
+      return jsonResponse
+          .map((kelompokretribusi) => new Datum.fromJson(kelompokretribusi))
+          .toList();
+    } else {
+      ToastUtils.show('Gagal mengambil data');
+      throw Exception('Failed to load Area Tagih from API');
+    }
   } catch (e) {
-    return null;
+    print(e);
+    throw Exception('Data Error');
   }
 }
 
@@ -78,11 +118,38 @@ ListView areaTagihListView(data) {
   return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {
-        return _tile(data[index].nmPasar, data[index].keterangan, Icons.work);
+        return _tileAreaTagih(
+            data[index].nmPasar, data[index].keterangan, Icons.work);
       });
 }
 
-ListTile _tile(String title, String subtitle, IconData icon) => ListTile(
+ListTile _tileAreaTagih(String title, String subtitle, IconData icon) =>
+    ListTile(
+      title: Text(title,
+          style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+              ) ??
+              'default value'),
+      subtitle: Text(subtitle) ?? 'default_value',
+      leading: Icon(
+        icon,
+        color: Colors.blue[500],
+      ),
+    );
+
+//konversi respon dari API ke class model Area Tagih
+ListView kelompokRetribusiListView(data) {
+  return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        return _kelompokRetribusi(
+            data[index].nm_kelompok, data[index].jenis_bangunan, Icons.work);
+      });
+}
+
+ListTile _kelompokRetribusi(String title, String subtitle, IconData icon) =>
+    ListTile(
       title: Text(title,
           style: TextStyle(
                 fontWeight: FontWeight.w500,

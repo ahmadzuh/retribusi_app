@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:retribusi_app/bloc/view_model/login_user_model.dart';
+import 'package:retribusi_app/bloc/view_model/user_log_out_model.dart';
 import 'package:retribusi_app/network/services/api_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,8 @@ class UserProvider with ChangeNotifier {
 
   LoginUserModel user = LoginUserModel();
 
+  UserLogOutModel userLogOutModel = UserLogOutModel();
+
   String name;
   String email;
   String token;
@@ -22,6 +25,7 @@ class UserProvider with ChangeNotifier {
     getUserName();
     getEmail();
   }
+
   Future<bool> loginUser(String email, password) async {
     final result = await Webservice().login(email, password);
     _status = Status.Authenticating;
@@ -39,6 +43,13 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
 
     return null;
+  }
+
+  //Fungsi delete token
+  Future signOut() async {
+    deleteUserToken();
+    notifyListeners();
+    return Future.delayed(Duration.zero); // need for type return
   }
 
   setUserToken() async {
@@ -86,13 +97,6 @@ class UserProvider with ChangeNotifier {
     _status = Status.Unauthenticated;
     print('Token di Hapus $token');
     notifyListeners();
-  }
-
-  //Fungsi delete token
-  Future signOut() async {
-    deleteUserToken();
-    notifyListeners();
-    return Future.delayed(Duration.zero); // need for type return
   }
 
   /*Validasi Textformfield */

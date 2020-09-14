@@ -41,19 +41,21 @@ class _PengaturanState extends State<Pengaturan> {
                           child: Text(
                             userData.email,
                             style: TextStyle(
-                                color: ColorBase.veryDarkGrey,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: FontsFamily.latoLight),
+                                    color: ColorBase.veryDarkGrey,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: FontsFamily.latoLight) ??
+                                'Tidak ada data',
                           ),
                         ),
                         Container(
                           height: 30.0,
                           child: Text(userData.name,
-                              style: TextStyle(
-                                  color: ColorBase.veryDarkGrey,
-                                  fontSize: 14,
-                                  fontFamily: FontsFamily.latoLight)),
+                                  style: TextStyle(
+                                      color: ColorBase.veryDarkGrey,
+                                      fontSize: 14,
+                                      fontFamily: FontsFamily.latoLight)) ??
+                              'Tidak ada data',
                         )
                       ],
                     ),

@@ -7,17 +7,22 @@ import 'package:retribusi_app/ui/screen/login_screen.dart';
 class MainUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userprovider = Provider.of<UserProvider>(context);
+    return Consumer<UserProvider>(builder: (context, user, child) {
+      switch (user.status) {
+        case Status.Unauthenticated:
+          return LoginScreen();
 
-    if (userprovider.status == Status.Unauthenticated) {
-      return LoginScreen();
-    } else if (userprovider.status == Status.Authenticated) {
-      return HomeScreen();
-    } else if (userprovider.status == Status.Authenticating) {
-      return Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-    return null;
+        case Status.Authenticated:
+          return HomeScreen();
+
+        case Status.Authenticating:
+          return Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+
+        default:
+          return LoginScreen();
+      }
+    });
   }
 }

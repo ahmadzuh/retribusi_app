@@ -4,7 +4,7 @@ import 'package:retribusi_app/bloc/providers/user_provider.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
 import 'package:retribusi_app/ui/main_ui.dart';
 
-//simple do more
+// //simple do more
 void main() => runApp(MainApp());
 
 class MainApp extends StatelessWidget {
