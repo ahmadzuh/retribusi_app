@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // Initially password is obscure
   bool _obscureText = true;
 
-  // Toggles the password show status
+  // toggle password show status
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;

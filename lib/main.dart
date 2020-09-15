@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:retribusi_app/bloc/providers/user_provider.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
+import 'package:retribusi_app/ui/common/route/router.gr.dart';
 import 'package:retribusi_app/ui/main_ui.dart';
 
 // //simple do more
@@ -29,6 +30,7 @@ class MainApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         title: 'Aplikasi Retribusi',
+        onGenerateRoute: Router().onGenerateRoute,
         home: Scaffold(body: MainUI()),
       ),
     );

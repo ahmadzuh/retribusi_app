@@ -16,6 +16,7 @@ import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/detail_tagihan.dart';
 import 'package:retribusi_app/bloc/view_model/area_tagih_model.dart';
+import 'package:retribusi_app/bloc/view_model/kelompok_retribusi_model.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/kelompok_retribusi.dart';
 
 abstract class Routes {
@@ -95,7 +96,8 @@ class Router extends RouterBase {
         final typedArgs =
             args as TagihanDetailArguments ?? TagihanDetailArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) => TagihanDetail(areaTagih: typedArgs.areaTagih),
+          builder: (context) => TagihanDetail(
+              areaTagih: typedArgs.areaTagih, datum: typedArgs.datum),
           settings: settings,
         );
       case Routes.kelompokRetribusi:
@@ -105,8 +107,8 @@ class Router extends RouterBase {
         final typedArgs =
             args as KelompokRetribusiArguments ?? KelompokRetribusiArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) =>
-              KelompokRetribusi(areaTagih: typedArgs.areaTagih),
+          builder: (context) => KelompokRetribusi(
+              datum: typedArgs.datum, areaTagih: typedArgs.areaTagih),
           settings: settings,
         );
       default:
@@ -122,11 +124,13 @@ class Router extends RouterBase {
 //TagihanDetail arguments holder class
 class TagihanDetailArguments {
   final AreaTagih areaTagih;
-  TagihanDetailArguments({this.areaTagih});
+  final Datum datum;
+  TagihanDetailArguments({this.areaTagih, this.datum});
 }
 
 //KelompokRetribusi arguments holder class
 class KelompokRetribusiArguments {
+  final Datum datum;
   final AreaTagih areaTagih;
-  KelompokRetribusiArguments({this.areaTagih});
+  KelompokRetribusiArguments({this.datum, this.areaTagih});
 }
