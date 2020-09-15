@@ -96,7 +96,7 @@ class _PengaturanState extends State<Pengaturan> {
                               Container(
                                   height: 20,
                                   child: Image.asset(
-                                      '${Environment.iconAssets}toko.png')),
+                                      '${Environment.iconAssets}akun.png')),
                               SizedBox(
                                 width: 20,
                               ),
@@ -132,7 +132,10 @@ class _PengaturanState extends State<Pengaturan> {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            Icon(Icons.apps),
+                            Container(
+                                height: 20,
+                                child: Image.asset(
+                                    '${Environment.iconAssets}appversion.png')),
                             SizedBox(
                               width: 16,
                             ),
@@ -143,7 +146,7 @@ class _PengaturanState extends State<Pengaturan> {
                           ],
                         ),
                         Text(
-                          '1.0',
+                          '1.0 (Beta)',
                           style: TextStyle(color: ColorBase.darkGrey),
                         )
                       ],

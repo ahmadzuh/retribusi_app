@@ -23,7 +23,7 @@ class UserProvider with ChangeNotifier {
   UserProvider() {
     getUserToken();
     getUserName();
-    getEmail();
+    getUserEmail();
   }
 
   Future<bool> loginUser(String email, password) async {
@@ -32,6 +32,7 @@ class UserProvider with ChangeNotifier {
 
     this.user = result;
     this.name = user.data.name;
+    this.email = user.data.email;
     this.token = user.token;
 
     await setUserToken();
@@ -45,7 +46,7 @@ class UserProvider with ChangeNotifier {
     return null;
   }
 
-  //Fungsi delete token
+  //fungsi hapus token
   Future signOut() async {
     deleteUserToken();
     notifyListeners();
@@ -84,10 +85,11 @@ class UserProvider with ChangeNotifier {
     return this.name;
   }
 
-  getEmail() async {
+  getUserEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.email = prefs.getString("email" ?? '');
 
+    notifyListeners();
     return email;
   }
 
@@ -99,7 +101,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /*Validasi Textformfield */
+  //validasi textformfield
   String validateEmail(String value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -116,13 +118,14 @@ class UserProvider with ChangeNotifier {
     }
   }
 }
+/*
+Future<User> changePassword(
+    String old_password, new_password, confirm_new_password) async {
+  final result = await Webservice()
+      A.changePassword(old_password, new_password, confirm_new_password);
 
-// Future<User> changePassword(
-//     String old_password, new_password, confirm_new_password) async {
-//   final result = await Webservice()
-//       .changePassword(old_password, new_password, confirm_new_password);
-
-//   print("Password change success");
-//   print(result);
-//   notifyListeners();
-// }
+  print("Password change success");
+  print(result);
+  notifyListeners();
+}
+*/

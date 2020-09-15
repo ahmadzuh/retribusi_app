@@ -191,7 +191,7 @@ class _TagihanState extends State<Tagihan> {
                         ),
                         SizedBox(width: 2.0),
                         Padding(
-                          padding: const EdgeInsets.only(top: 40.0),
+                          padding: const EdgeInsets.only(top: 30.0),
                           child: FlatButton(
                             onPressed: () async {
                               var result = await Navigator.push(context,
