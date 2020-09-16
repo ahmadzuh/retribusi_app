@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:retribusi_app/bloc/providers/user_provider.dart';
-import 'package:retribusi_app/ui/screen/home_screen.dart';
-import 'package:retribusi_app/ui/screen/login_screen.dart';
+
+import '../bloc/providers/user_provider.dart';
+import 'screen/home_screen.dart';
+import 'screen/login_screen.dart';
 
 class MainUI extends StatelessWidget {
   @override

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:retribusi_app/bloc/providers/user_provider.dart';
-import 'package:retribusi_app/ui/common/const/color.dart';
-import 'package:retribusi_app/ui/common/const/font.dart';
-import 'package:retribusi_app/ui/common/environment/environment.dart';
-import 'package:retribusi_app/ui/widget/custom_appbar.dart';
+
+import '../../../bloc/providers/user_provider.dart';
+import '../../common/const/color.dart';
+import '../../common/const/font.dart';
+import '../../common/environment/environment.dart';
+import '../../widget/custom_appbar.dart';
 
 class Pengaturan extends StatefulWidget {
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/ui/widget/custom_appbar.dart';
+
+import '../../widget/custom_appbar.dart';
 
 class History extends StatefulWidget {
   @override

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
-import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
-import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
-import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
-import 'package:retribusi_app/ui/widget/custom_buttom_tabs.dart';
+
+import '../pages/page_history/history_page.dart';
+import '../pages/page_pengaturan/pengaturan_page.dart';
+import '../pages/page_setoran/setoran_page.dart';
+import '../pages/page_tagihan/tagihan_page.dart';
+import '../widget/custom_buttom_tabs.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

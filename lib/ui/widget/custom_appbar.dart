@@ -74,6 +74,7 @@ class CustomAppBar {
   static Text setTitleAppBar(String title) {
     return Text(title,
         style: TextStyle(
+            color: Colors.white,
             fontSize: 16.0,
             fontWeight: FontWeight.w600,
             fontFamily: FontsFamily.productSans),

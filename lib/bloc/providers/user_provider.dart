@@ -100,7 +100,6 @@ class UserProvider with ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
     await pref.clear();
     _status = Status.Unauthenticated;
-    print('Token di Hapus $token');
     notifyListeners();
   }
 

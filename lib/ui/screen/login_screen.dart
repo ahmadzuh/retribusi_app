@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:retribusi_app/bloc/providers/user_provider.dart';
-import 'package:retribusi_app/ui/common/const/dictionary.dart';
-import 'package:retribusi_app/ui/common/const/font.dart';
-import 'package:retribusi_app/ui/common/environment/environment.dart';
+
+import '../../bloc/providers/user_provider.dart';
+import '../common/const/dictionary.dart';
+import '../common/const/font.dart';
+import '../common/environment/environment.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
