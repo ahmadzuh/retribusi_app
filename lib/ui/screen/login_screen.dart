@@ -6,12 +6,17 @@ import 'package:retribusi_app/ui/common/const/font.dart';
 import 'package:retribusi_app/ui/common/environment/environment.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key key}) : super(key: key);
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  String email;
+  String password;
 
   final TextEditingController emailController =
       TextEditingController(text: 'jurutagih@jambikota.go.id');
