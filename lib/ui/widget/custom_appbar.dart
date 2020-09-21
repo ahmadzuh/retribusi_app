@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/ui/common/const/color.dart';
-import 'package:retribusi_app/ui/common/const/dictionary.dart';
-import 'package:retribusi_app/ui/common/const/font.dart';
+
+import '../common/const/color.dart';
+import '../common/const/dictionary.dart';
+import '../common/const/font.dart';
 
 class CustomAppBar {
   static AppBar defaultAppBar(
@@ -10,6 +11,9 @@ class CustomAppBar {
       List<Widget> actions,
       PreferredSizeWidget bottom}) {
     return AppBar(
+      iconTheme: IconThemeData(
+        color: Colors.white, //change your color here
+      ),
       backgroundColor: ColorBase.bluebase,
       elevation: 0.5,
       leading: leading,

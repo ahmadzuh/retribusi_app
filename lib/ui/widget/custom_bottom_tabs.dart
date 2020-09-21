@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/ui/common/environment/environment.dart';
+
+import '../common/environment/environment.dart';
 
 class BottomTabs extends StatefulWidget {
   final int selectedTab;
@@ -83,7 +84,7 @@ class BottomTabBtn extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 28.0, horizontal: 24.0),
+        padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 22.0),
         decoration: BoxDecoration(
             border: Border(
                 top: BorderSide(

@@ -66,7 +66,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   Image.asset('${Environment.imageAssets}login.png'),
                   SizedBox(height: 20.0),
                   Container(child: textSection(user)),
-                  buttonSection(context, user)
+                  buttonSection(context, user),
+                  SizedBox(height: 10.0),
                 ]),
           ),
         ),

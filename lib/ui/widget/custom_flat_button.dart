@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/ui/common/style/styles.dart';
+
+import '../common/style/styles.dart';
 
 class StyledFlatButton extends StatelessWidget {
   final String text;

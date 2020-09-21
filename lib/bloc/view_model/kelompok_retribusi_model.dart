@@ -14,29 +14,30 @@ class KelompokRetribusiModel {
   KelompokRetribusiModel({
     this.status,
     this.message,
-    this.data,
+    this.retkel,
   });
 
   bool status;
   String message;
-  List<Datum> data;
+  List<Retkel> retkel;
 
   factory KelompokRetribusiModel.fromJson(Map<String, dynamic> json) =>
       KelompokRetribusiModel(
         status: json["status"],
         message: json["message"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        retkel:
+            List<Retkel>.from(json["retkel"].map((x) => Retkel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "retkel": List<dynamic>.from(retkel.map((x) => x.toJson())),
       };
 }
 
-class Datum {
-  Datum({
+class Retkel {
+  Retkel({
     this.id,
     this.nmKelompok,
     this.jenisBangunan,
@@ -46,7 +47,7 @@ class Datum {
   String nmKelompok;
   String jenisBangunan;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Retkel.fromJson(Map<String, dynamic> json) => Retkel(
         id: json["id"],
         nmKelompok: json["nm_kelompok"],
         jenisBangunan: json["jenis_bangunan"],

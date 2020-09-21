@@ -4,20 +4,19 @@
 // AutoRouteGenerator
 // **************************************************************************
 
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/bloc/view_model/area_tagih_model.dart';
-import 'package:retribusi_app/bloc/view_model/kelompok_retribusi_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:retribusi_app/ui/main_ui.dart';
+import 'package:retribusi_app/ui/screen/login_screen.dart';
+import 'package:retribusi_app/ui/screen/home_screen.dart';
 import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
 import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
 import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
-import 'package:retribusi_app/ui/pages/page_tagihan/detail_tagihan.dart';
-import 'package:retribusi_app/ui/pages/page_tagihan/kelompok_retribusi.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
-import 'package:retribusi_app/ui/screen/home_screen.dart';
-import 'package:retribusi_app/ui/screen/login_screen.dart';
+import 'package:retribusi_app/ui/pages/page_tagihan/detail_tagihan.dart';
+import 'package:retribusi_app/bloc/view_model/area_tagih_model.dart';
+import 'package:retribusi_app/ui/pages/page_tagihan/kelompok_retribusi.dart';
 
 abstract class Routes {
   static const mainUI = '/';
@@ -60,8 +59,13 @@ class Router extends RouterBase {
           settings: settings,
         );
       case Routes.loginScreen:
+        if (hasInvalidArgs<LoginScreenArguments>(args)) {
+          return misTypedArgsRoute<LoginScreenArguments>(args);
+        }
+        final typedArgs =
+            args as LoginScreenArguments ?? LoginScreenArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) => LoginScreen(),
+          builder: (context) => LoginScreen(key: typedArgs.key),
           settings: settings,
         );
       case Routes.homeScreen:
@@ -96,8 +100,7 @@ class Router extends RouterBase {
         final typedArgs =
             args as TagihanDetailArguments ?? TagihanDetailArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) => TagihanDetail(
-              areaTagih: typedArgs.areaTagih, datum: typedArgs.datum),
+          builder: (context) => TagihanDetail(areaTagih: typedArgs.areaTagih),
           settings: settings,
         );
       case Routes.kelompokRetribusi:
@@ -107,8 +110,8 @@ class Router extends RouterBase {
         final typedArgs =
             args as KelompokRetribusiArguments ?? KelompokRetribusiArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) => KelompokRetribusi(
-              datum: typedArgs.datum, areaTagih: typedArgs.areaTagih),
+          builder: (context) =>
+              KelompokRetribusi(areaTagih: typedArgs.areaTagih),
           settings: settings,
         );
       default:
@@ -121,16 +124,20 @@ class Router extends RouterBase {
 // Arguments holder classes
 // **************************************************************************
 
+//LoginScreen arguments holder class
+class LoginScreenArguments {
+  final Key key;
+  LoginScreenArguments({this.key});
+}
+
 //TagihanDetail arguments holder class
 class TagihanDetailArguments {
   final AreaTagih areaTagih;
-  final Datum datum;
-  TagihanDetailArguments({this.areaTagih, this.datum});
+  TagihanDetailArguments({this.areaTagih});
 }
 
 //KelompokRetribusi arguments holder class
 class KelompokRetribusiArguments {
-  final Datum datum;
   final AreaTagih areaTagih;
-  KelompokRetribusiArguments({this.datum, this.areaTagih});
+  KelompokRetribusiArguments({this.areaTagih});
 }
