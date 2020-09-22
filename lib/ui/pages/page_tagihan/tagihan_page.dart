@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:retribusi_app/ui/pages/page_tagihan/kelompok_retribusi.dart';
 
 import '../../../bloc/providers/user_provider.dart';
 import '../../../bloc/view_model/area_tagih_model.dart';
@@ -179,7 +180,7 @@ class _TagihanState extends State<Tagihan> {
                           onPressed: () async {
                             var result = await Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return TagihanDetail(areaTagih: areaTagih);
+                              return KelompokRetribusi(areaTagih: areaTagih);
                             }));
                             if (result != null) {
                               setState(() {});
