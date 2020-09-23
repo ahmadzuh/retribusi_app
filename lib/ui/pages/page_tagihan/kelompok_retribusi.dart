@@ -4,6 +4,7 @@ import 'package:retribusi_app/ui/widget/custom_appbar.dart';
 
 import '../../../bloc/view_model/area_tagih_model.dart';
 import '../../../bloc/view_model/kelompok_retribusi_model.dart';
+import '../../common/util/toast_util.dart';
 
 class KelompokRetribusi extends StatefulWidget {
   final AreaTagih areaTagih;
@@ -85,16 +86,10 @@ class _KelompokRetribusiState extends State<KelompokRetribusi> {
                       children: <Widget>[
                         FlatButton(
                           onPressed: () async {
-                            // var result = await Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return TagihanDetail(areaTagih: areaTagih);
-                            // }));
-                            // if (result != null) {
-                            //   setState(() {});
-                            // }
+                            ToastUtils.show(retkel.id.toString());
                           },
                           child: Text(
-                            "Selengkapnya",
+                            "Lihat",
                             style: TextStyle(color: Colors.green),
                           ),
                         ),

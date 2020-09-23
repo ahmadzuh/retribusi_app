@@ -14,7 +14,6 @@ import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
 import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
 import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
-import 'package:retribusi_app/ui/pages/page_tagihan/detail_tagihan.dart';
 import 'package:retribusi_app/bloc/view_model/area_tagih_model.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/kelompok_retribusi.dart';
 
@@ -93,16 +92,7 @@ class Router extends RouterBase {
           builder: (context) => Tagihan(),
           settings: settings,
         );
-      case Routes.tagihanDetail:
-        if (hasInvalidArgs<TagihanDetailArguments>(args)) {
-          return misTypedArgsRoute<TagihanDetailArguments>(args);
-        }
-        final typedArgs =
-            args as TagihanDetailArguments ?? TagihanDetailArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => TagihanDetail(areaTagih: typedArgs.areaTagih),
-          settings: settings,
-        );
+
       case Routes.kelompokRetribusi:
         if (hasInvalidArgs<KelompokRetribusiArguments>(args)) {
           return misTypedArgsRoute<KelompokRetribusiArguments>(args);

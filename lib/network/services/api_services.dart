@@ -23,7 +23,7 @@ class Webservice {
       'password': password,
       'device_name': 'Mobile'
     };
-    final response = await http.post(ApiService.loginUrl, body: userdata);
+    final response = await http.post('$baseUrl/login', body: userdata);
     if (response.statusCode == 200) {
       print(response.body);
       return LoginUserModel.fromJson(json.decode(response.body));
@@ -39,7 +39,7 @@ class Webservice {
       final sharedPreferences = await SharedPreferences.getInstance();
       var token = sharedPreferences.getString('token');
 
-      final response = await http.get(ApiService.areaTagih, headers: {
+      final response = await http.get('$baseUrl/area-tagih', headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
@@ -67,48 +67,12 @@ class Webservice {
     }
   }
 
-  Future<List<AreaTagih>> areaTagihDetail(AreaTagih data) async {
-    try {
-      List<AreaTagih> list;
-      final sharedPreferences = await SharedPreferences.getInstance();
-      var token = sharedPreferences.getString('token');
-
-      final response = await http.get(
-          'https://retribusi.jambikota.go.id/api/v1/area-tagih${data.id}',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer $token',
-          });
-
-      switch (response.statusCode) {
-        case 200:
-          var data = json.decode(response.body);
-          var rest = data['area_tagih'] as List;
-          list =
-              rest.map<AreaTagih>((json) => AreaTagih.fromJson(json)).toList();
-          return list;
-        case 400:
-          throw BadRequestException(response.body);
-        case 401:
-        case 403:
-          throw UnauthorisedException(response.body);
-        case 500:
-        default:
-          throw FetchDataException(
-              'Terjadi kesalahan saat Komunikasi dengan Server dengan Kode Status : ${response.body}');
-      }
-    } on SocketException {
-      throw FetchDataException('Coba hubungkan ulang ke Internet');
-    }
-  }
-
-  Future<List<Retkel>> kelompokRetribusi(Retkel data) async {
+  Future<List<Retkel>> kelompokRetribusi(Retkel id) async {
     try {
       final sharedPreferences = await SharedPreferences.getInstance();
       var token = sharedPreferences.getString('token');
       final response = await http.get(
-        'https://retribusi.jambikota.go.id/api/v1/kelompok-retribusi/',
+        '$baseUrl/kelompok-retribusi/1',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

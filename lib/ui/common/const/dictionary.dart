@@ -2,7 +2,7 @@ class Dictionary {
   //app name
   static String appName = 'Retribusi';
   static String appSubtitle = 'Aplikasi Retribusi Kota jambi';
-  static String selamatDatang = 'Selamat Datang';
+  static String selamatDatang = 'Selamat Datang, ';
 
   //menu
   static String setoran = 'Setoran';

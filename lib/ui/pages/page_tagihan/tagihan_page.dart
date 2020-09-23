@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:retribusi_app/ui/pages/page_tagihan/kelompok_retribusi.dart';
-
 import '../../../bloc/providers/user_provider.dart';
 import '../../../bloc/view_model/area_tagih_model.dart';
 import '../../../network/services/api_services.dart';
@@ -11,7 +9,7 @@ import '../../common/const/dictionary.dart';
 import '../../common/const/font.dart';
 import '../../common/environment/environment.dart';
 import '../../common/util/clock_time.dart';
-import 'detail_tagihan.dart';
+import 'kelompok_retribusi.dart';
 
 class Tagihan extends StatefulWidget {
   @override
@@ -70,7 +68,7 @@ class _TagihanState extends State<Tagihan> {
                 ],
               ),
             ),
-            body: Stack(children: <Widget>[
+            body: Stack(children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.20,
                 color: ColorBase.bluebase,

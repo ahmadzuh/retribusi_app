@@ -4,7 +4,6 @@ import '../../main_ui.dart';
 import '../../pages/page_history/history_page.dart';
 import '../../pages/page_pengaturan/pengaturan_page.dart';
 import '../../pages/page_setoran/setoran_page.dart';
-import '../../pages/page_tagihan/detail_tagihan.dart';
 import '../../pages/page_tagihan/kelompok_retribusi.dart';
 import '../../pages/page_tagihan/tagihan_page.dart';
 import '../../screen/home_screen.dart';
@@ -25,6 +24,5 @@ class $Router {
   Setoran setoran;
 
   Tagihan tagihan;
-  TagihanDetail tagihanDetail;
   KelompokRetribusi kelompokRetribusi;
 }
