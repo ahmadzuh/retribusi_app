@@ -194,42 +194,44 @@ class _LoginScreenState extends State<LoginScreen> {
       width: MediaQuery.of(context).size.width,
       height: 50.0,
       margin: EdgeInsets.only(top: 16.0, right: 14),
-      child: FlatButton(
-        onPressed: () {
-          if (_formKey.currentState.validate()) {
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Log In ')));
-            user.loginUser(emailController.text, passwordController.text);
-          }
-        },
-        padding: EdgeInsets.all(0),
-        child: Ink(
-          decoration: BoxDecoration(
+      child: Builder(
+        builder: (context) => FlatButton(
+          onPressed: () {
+            if (_formKey.currentState.validate()) {
+              Scaffold.of(context)
+                  .showSnackBar(SnackBar(content: Text('Log In ')));
+              user.loginUser(emailController.text, passwordController.text);
+            }
+          },
+          padding: EdgeInsets.all(0),
+          child: Ink(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xffa4bfd9),
+                  Color(0xff0088ff),
+                  Color(0xff8bb9dd),
+                ],
+              ),
+            ),
+            child: Container(
+              alignment: Alignment.center,
+              constraints:
+                  BoxConstraints(maxWidth: double.infinity, minHeight: 50),
+              child: Text(
+                "Login",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color(0xffa4bfd9),
-                Color(0xff0088ff),
-                Color(0xff8bb9dd),
-              ],
-            ),
           ),
-          child: Container(
-            alignment: Alignment.center,
-            constraints:
-                BoxConstraints(maxWidth: double.infinity, minHeight: 50),
-            child: Text(
-              "Login",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
         ),
       ),
     );
