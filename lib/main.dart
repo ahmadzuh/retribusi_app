@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:retribusi_app/bloc/providers/user_provider.dart';
-import 'package:retribusi_app/ui/common/const/color.dart';
-import 'package:retribusi_app/ui/common/route/router.gr.dart';
-import 'package:retribusi_app/ui/main_ui.dart';
+
+import 'bloc/providers/user_provider.dart';
+import 'ui/common/const/color.dart';
+import 'ui/common/route/router.gr.dart';
+import 'ui/main_ui.dart';
 
 // //simple do more
 void main() => runApp(MainApp());

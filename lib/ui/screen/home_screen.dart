@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../pages/page_riwayat/riwayat_page.dart';
 
-import '../pages/page_history/history_page.dart';
 import '../pages/page_pengaturan/pengaturan_page.dart';
 import '../pages/page_setoran/setoran_page.dart';
 import '../pages/page_tagihan/tagihan_page.dart';
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _selectedTab = num;
                 });
               },
-              children: [Tagihan(), Setoran(), History(), Pengaturan()],
+              children: [Tagihan(), Setoran(), Riwayat(), Pengaturan()],
             ),
           ),
           BottomTabs(

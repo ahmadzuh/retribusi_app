@@ -4,38 +4,37 @@
 // AutoRouteGenerator
 // **************************************************************************
 
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:retribusi_app/ui/main_ui.dart';
-import 'package:retribusi_app/ui/screen/login_screen.dart';
-import 'package:retribusi_app/ui/screen/home_screen.dart';
-import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
-import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
-import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
-import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:retribusi_app/bloc/view_model/area_tagih_model.dart';
+import 'package:retribusi_app/bloc/view_model/kelompok_retribusi_model.dart';
+import 'package:retribusi_app/ui/main_ui.dart';
+import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
+import 'package:retribusi_app/ui/pages/page_riwayat/riwayat_page.dart';
+import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
 import 'package:retribusi_app/ui/pages/page_tagihan/kelompok_retribusi.dart';
+import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
+import 'package:retribusi_app/ui/screen/home_screen.dart';
+import 'package:retribusi_app/ui/screen/login_screen.dart';
 
 abstract class Routes {
   static const mainUI = '/';
   static const loginScreen = '/login-screen';
   static const homeScreen = '/home-screen';
-  static const history = '/history';
+  static const riwayat = '/riwayat';
   static const pengaturan = '/pengaturan';
   static const setoran = '/setoran';
   static const tagihan = '/tagihan';
-  static const tagihanDetail = '/tagihan-detail';
   static const kelompokRetribusi = '/kelompok-retribusi';
   static const all = {
     mainUI,
     loginScreen,
     homeScreen,
-    history,
+    riwayat,
     pengaturan,
     setoran,
     tagihan,
-    tagihanDetail,
     kelompokRetribusi,
   };
 }
@@ -72,9 +71,9 @@ class Router extends RouterBase {
           builder: (context) => HomeScreen(),
           settings: settings,
         );
-      case Routes.history:
+      case Routes.riwayat:
         return MaterialPageRoute<dynamic>(
-          builder: (context) => History(),
+          builder: (context) => Riwayat(),
           settings: settings,
         );
       case Routes.pengaturan:
@@ -92,7 +91,6 @@ class Router extends RouterBase {
           builder: (context) => Tagihan(),
           settings: settings,
         );
-
       case Routes.kelompokRetribusi:
         if (hasInvalidArgs<KelompokRetribusiArguments>(args)) {
           return misTypedArgsRoute<KelompokRetribusiArguments>(args);
@@ -100,8 +98,8 @@ class Router extends RouterBase {
         final typedArgs =
             args as KelompokRetribusiArguments ?? KelompokRetribusiArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) =>
-              KelompokRetribusi(areaTagih: typedArgs.areaTagih),
+          builder: (context) => KelompokRetribusi(
+              areaTagih: typedArgs.areaTagih, retkel: typedArgs.retkel),
           settings: settings,
         );
       default:
@@ -120,14 +118,9 @@ class LoginScreenArguments {
   LoginScreenArguments({this.key});
 }
 
-//TagihanDetail arguments holder class
-class TagihanDetailArguments {
-  final AreaTagih areaTagih;
-  TagihanDetailArguments({this.areaTagih});
-}
-
 //KelompokRetribusi arguments holder class
 class KelompokRetribusiArguments {
   final AreaTagih areaTagih;
-  KelompokRetribusiArguments({this.areaTagih});
+  final Retkel retkel;
+  KelompokRetribusiArguments({this.areaTagih, this.retkel});
 }
