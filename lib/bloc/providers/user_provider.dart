@@ -1,7 +1,10 @@
 import 'package:flutter/widgets.dart';
-import 'package:retribusi_app/bloc/viewModel/user_model.dart';
-import 'package:retribusi_app/network/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../network/services/api_services.dart';
+import '../../ui/widget/custom_notification_text.dart';
+import '../view_model/login_user_model.dart';
+import '../view_model/user_log_out_model.dart';
 
 enum Status { Authenticated, Authenticating, Unauthenticated }
 
@@ -9,8 +12,12 @@ class UserProvider with ChangeNotifier {
   Status get status => _status;
   Status _status = Status.Unauthenticated;
   String isAuth;
+  NotificationText _notification;
 
-  UserModel user = UserModel();
+  LoginUserModel user = LoginUserModel();
+  UserLogOutModel userLogOutModel = UserLogOutModel();
+
+  NotificationText get notification => _notification;
 
   String name;
   String email;
@@ -20,14 +27,16 @@ class UserProvider with ChangeNotifier {
   UserProvider() {
     getUserToken();
     getUserName();
-    getEmail();
+    getUserEmail();
   }
+
   Future<bool> loginUser(String email, password) async {
     final result = await Webservice().login(email, password);
     _status = Status.Authenticating;
 
     this.user = result;
     this.name = user.data.name;
+    this.email = user.data.email;
     this.token = user.token;
 
     await setUserToken();
@@ -39,6 +48,13 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
 
     return null;
+  }
+
+  //fungsi hapus token
+  Future signOut() async {
+    deleteUserToken();
+    notifyListeners();
+    return Future.delayed(Duration.zero); // need for type return
   }
 
   setUserToken() async {
@@ -73,10 +89,11 @@ class UserProvider with ChangeNotifier {
     return this.name;
   }
 
-  getEmail() async {
+  getUserEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.email = prefs.getString("email" ?? '');
 
+    notifyListeners();
     return email;
   }
 
@@ -84,18 +101,10 @@ class UserProvider with ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
     await pref.clear();
     _status = Status.Unauthenticated;
-    print('Token di Hapus $token');
     notifyListeners();
   }
 
-  //Fungsi delete token
-  Future signOut() async {
-    deleteUserToken();
-    notifyListeners();
-    return Future.delayed(Duration.zero); // need for type return
-  }
-
-  /*Validasi Textformfield */
+  //validasi textformfield
   String validateEmail(String value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -112,13 +121,14 @@ class UserProvider with ChangeNotifier {
     }
   }
 }
+/*
+Future<User> changePassword(
+    String old_password, new_password, confirm_new_password) async {
+  final result = await Webservice()
+      A.changePassword(old_password, new_password, confirm_new_password);
 
-// Future<User> changePassword(
-//     String old_password, new_password, confirm_new_password) async {
-//   final result = await Webservice()
-//       .changePassword(old_password, new_password, confirm_new_password);
-
-//   print("Password change success");
-//   print(result);
-//   notifyListeners();
-// }
+  print("Password change success");
+  print(result);
+  notifyListeners();
+}
+*/

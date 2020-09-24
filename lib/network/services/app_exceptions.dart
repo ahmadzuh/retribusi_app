@@ -11,7 +11,7 @@ class AppException implements Exception {
 
 class FetchDataException extends AppException {
   FetchDataException([String message])
-      : super(message, "Error During Communication: ");
+      : super(message, 'Tidak ada Koneksi Internet\n');
 }
 
 class BadRequestException extends AppException {

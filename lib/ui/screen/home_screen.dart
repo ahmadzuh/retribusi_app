@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/ui/common/const/color.dart';
-import 'package:retribusi_app/ui/pages/page_history/history_page.dart';
-import 'package:retribusi_app/ui/pages/page_pengaturan/pengaturan_page.dart';
-import 'package:retribusi_app/ui/pages/page_setoran/setoran_page.dart';
-import 'package:retribusi_app/ui/pages/page_tagihan/tagihan_page.dart';
+
+import '../pages/page_history/history_page.dart';
+import '../pages/page_pengaturan/pengaturan_page.dart';
+import '../pages/page_setoran/setoran_page.dart';
+import '../pages/page_tagihan/tagihan_page.dart';
+import '../widget/custom_bottom_tabs.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,38 +12,50 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
-  final _widgetOptions = [Tagihan(), Setoran(), History(), Pengaturan()];
+  PageController _tabsPageController;
+  int _selectedTab = 0;
+
+  @override
+  void initState() {
+    _tabsPageController = PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabsPageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-          backgroundColor: Colors.white,
-
-          //If you want to show body behind the navbar, it should be true
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: ColorBase.bluebase,
-            currentIndex: currentIndex,
-            unselectedItemColor: Colors.grey,
-            onTap: (val) {
-              currentIndex = val;
-              setState(() {});
-            },
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home), title: new Text('Home')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.get_app), title: new Text('Setoran')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.history), title: new Text('History')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), title: new Text('Akun')),
-            ],
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: PageView(
+              controller: _tabsPageController,
+              onPageChanged: (num) {
+                setState(() {
+                  _selectedTab = num;
+                });
+              },
+              children: [Tagihan(), Setoran(), History(), Pengaturan()],
+            ),
           ),
-          body: _widgetOptions.elementAt(currentIndex)),
+          BottomTabs(
+            selectedTab: _selectedTab,
+            tabPressed: (num) {
+              setState(() {
+                _tabsPageController.animateToPage(num,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeOutCubic);
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }
