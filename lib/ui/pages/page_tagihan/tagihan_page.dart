@@ -9,8 +9,8 @@ import '../../common/const/color.dart';
 import '../../common/const/dictionary.dart';
 import '../../common/const/font.dart';
 import '../../common/environment/environment.dart';
+import '../../common/route/router.gr.dart';
 import '../../common/util/clock_time.dart';
-import 'kelompok_retribusi.dart';
 
 class Tagihan extends StatefulWidget {
   @override
@@ -176,14 +176,10 @@ class _TagihanState extends State<Tagihan> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         FlatButton(
-                          onPressed: () async {
-                            var result = await Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return KelompokRetribusi(areaTagih: areaTagih);
-                            }));
-                            if (result != null) {
-                              setState(() {});
-                            }
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, Routes.kelompokRetribusi);
+                            return webservice.kelompokRetribusi(areaTagih.id);
                           },
                           child: Text(
                             "Selengkapnya",

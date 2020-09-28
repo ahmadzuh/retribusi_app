@@ -7,7 +7,7 @@ import 'ui/common/const/color.dart';
 import 'ui/common/route/router.gr.dart';
 import 'ui/main_ui.dart';
 
-// //simple do more
+//simple do more
 void main() => runApp(MainApp());
 
 class MainApp extends StatelessWidget {
@@ -28,10 +28,6 @@ class MainApp extends StatelessWidget {
           create: (_) => UserProvider(),
           lazy: false,
         ),
-        //  ChangeNotifierProvider<SharedPrefs>(
-        //    create: (_) => SharedPrefs(),
-        //    lazy: false,
-        //  )
       ],
       child: MaterialApp(
         theme: ThemeData(

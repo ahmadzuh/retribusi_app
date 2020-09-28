@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../pages/page_riwayat/riwayat_page.dart';
 
 import '../pages/page_pengaturan/pengaturan_page.dart';
+import '../pages/page_riwayat/riwayat_page.dart';
 import '../pages/page_setoran/setoran_page.dart';
 import '../pages/page_tagihan/tagihan_page.dart';
 import '../widget/custom_bottom_tabs.dart';

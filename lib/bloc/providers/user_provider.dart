@@ -11,6 +11,7 @@ enum Status { Authenticated, Authenticating, Unauthenticated }
 class UserProvider with ChangeNotifier {
   Status get status => _status;
   Status _status = Status.Unauthenticated;
+  bool isAuthentificated = false;
   String isAuth;
   NotificationText _notification;
 
@@ -60,10 +61,8 @@ class UserProvider with ChangeNotifier {
   setUserToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setBool("status", user.status);
-
     await sharedPreferences.setString("email", user.data.email);
     await sharedPreferences.setString("name", user.data.name);
-
     await sharedPreferences.setString("token", user.token);
 
     notifyListeners();
@@ -100,6 +99,7 @@ class UserProvider with ChangeNotifier {
   deleteUserToken() async {
     final pref = await SharedPreferences.getInstance();
     await pref.clear();
+    isAuthentificated = false;
     _status = Status.Unauthenticated;
     notifyListeners();
   }

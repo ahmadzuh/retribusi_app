@@ -38,13 +38,11 @@ class Webservice {
       List<AreaTagih> list;
       final sharedPreferences = await SharedPreferences.getInstance();
       var token = sharedPreferences.getString('token');
-
       final response = await http.get('$baseUrl/area-tagih', headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       });
-
       switch (response.statusCode) {
         case 200:
           var data = json.decode(response.body);
@@ -67,12 +65,12 @@ class Webservice {
     }
   }
 
-  Future<List<Retkel>> kelompokRetribusi(Retkel id) async {
+  Future<List<Retkel>> kelompokRetribusi(int id) async {
     try {
       final sharedPreferences = await SharedPreferences.getInstance();
       var token = sharedPreferences.getString('token');
       final response = await http.get(
-        '$baseUrl/kelompok-retribusi/1',
+        '$baseUrl/kelompok-retribusi/$id',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -87,6 +85,7 @@ class Webservice {
             .toList();
       } else {
         ToastUtils.show('Gagal mengambil data');
+        print(response);
         throw Exception('Failed to load Area Tagih from API');
       }
     } catch (e) {

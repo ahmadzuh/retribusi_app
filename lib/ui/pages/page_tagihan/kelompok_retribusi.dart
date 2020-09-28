@@ -17,21 +17,17 @@ class KelompokRetribusi extends StatefulWidget {
 
 class _KelompokRetribusiState extends State<KelompokRetribusi> {
   Webservice webservice;
+  Retkel retkel;
 
   @override
   void initState() {
     super.initState();
     webservice = Webservice();
+    retkel = Retkel();
   }
 
   @override
   Widget build(BuildContext context) {
-    int id;
-    String nmKelompok;
-    String jenisBangunan;
-    Retkel retkel =
-        Retkel(id: id, nmKelompok: nmKelompok, jenisBangunan: jenisBangunan);
-
     return Scaffold(
       appBar: CustomAppBar.defaultAppBar(
           title: widget.areaTagih == null
@@ -40,7 +36,7 @@ class _KelompokRetribusiState extends State<KelompokRetribusi> {
       body: Center(
         child: Container(
           child: FutureBuilder(
-            future: webservice.kelompokRetribusi(retkel),
+            future: webservice.kelompokRetribusi(retkel.id),
             builder:
                 (BuildContext context, AsyncSnapshot<List<Retkel>> snapshot) {
               if (snapshot.hasError) {

@@ -5,7 +5,6 @@ import '../../../bloc/providers/user_provider.dart';
 import '../../common/const/color.dart';
 import '../../common/const/font.dart';
 import '../../common/environment/environment.dart';
-import '../../common/route/router.gr.dart';
 import '../../widget/custom_appbar.dart';
 
 class Pengaturan extends StatefulWidget {
@@ -170,9 +169,7 @@ class _PengaturanState extends State<Pengaturan> {
                   color: Colors.white,
                   onPressed: () {
                     model.signOut();
-                    // Navigator.of(context);
-                    Navigator.of(context)
-                        .pushReplacementNamed(Routes.loginScreen);
+                    Navigator.of(context);
                   },
                   child: Padding(
                     padding: EdgeInsets.all(15),

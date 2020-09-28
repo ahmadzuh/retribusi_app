@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../bloc/providers/user_provider.dart';
-import '../common/const/color.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -12,7 +13,35 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  Map<String, String> _authData = {'email': '', 'password': ''};
+
+  Future _submit() async {
+    if (!_formKey.currentState.validate()) {
+      //invalid
+      return;
+    }
+    _formKey.currentState.save();
+    try {
+      await Provider.of<UserProvider>(context, listen: false)
+          .loginUser(_authData['email'], _authData['password']);
+    } on HttpException catch (e) {
+      var errorMessage = 'Authentication Failed';
+      if (e.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'Invalid email';
+        _showerrorDialog(errorMessage);
+      } else if (e.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'This email not found';
+        _showerrorDialog(errorMessage);
+      } else if (e.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid Password';
+        _showerrorDialog(errorMessage);
+      }
+    } catch (e) {
+      var errorMessage = 'Username atau Password Salah';
+      _showerrorDialog(errorMessage);
+    }
+  }
 
   String email;
   String password;
@@ -104,6 +133,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void _showerrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          'Coba Lagi',
+          style: TextStyle(color: Colors.blue),
+        ),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Oke'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   textSection(user) {
     return Container(
       padding: EdgeInsets.only(right: 14.0),
@@ -117,7 +167,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  //textforField password
   TextFormField txtEmail(String title, IconData icon, user) {
     return TextFormField(
       validator: (value) {
@@ -127,6 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
           return 'Format alamat email salah. Mohon periksa kembali.';
         }
         return null;
+      },
+      onSaved: (value) {
+        _authData['email'] = value;
       },
       controller: emailController,
       style: TextStyle(color: Colors.blue),
@@ -148,7 +200,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  //textforField password
   TextFormField txtPassword(String title, IconData icon) {
     return TextFormField(
       onChanged: null,
@@ -158,13 +209,15 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         return null;
       },
+      onSaved: (value) {
+        _authData['password'] = value;
+      },
       controller: passwordController,
       obscureText: _obscureText,
       style: TextStyle(color: Colors.blue),
       decoration: InputDecoration(
         suffixIcon: IconButton(
           icon: Icon(
-            // Based on passwordVisible state choose the icon
             _obscureText ? Icons.visibility_off : Icons.visibility,
             color: Theme.of(context).accentColor,
           ),
@@ -197,11 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Builder(
         builder: (context) => FlatButton(
           onPressed: () {
-            if (_formKey.currentState.validate()) {
-              Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text('Log In ')));
-              user.loginUser(emailController.text, passwordController.text);
-            }
+            _submit();
           },
           padding: EdgeInsets.all(0),
           child: Ink(
