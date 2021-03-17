@@ -43,6 +43,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
   }
 
   bool isSelected = false;
+  int selectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +108,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
             onTap: () {
               print('ID = ' + ' ${registrasiTempat.id}');
               setState(() {
-                isSelected = true;
+                selectedIndex = index;
               });
             },
             child: Container(
@@ -116,7 +117,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                   subtitle: Text(registrasiTempat.nmAsset),
                 ),
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.blue : Colors.white,
+                  color: selectedIndex == index ? Colors.grey[300] : null,
                 )),
           );
         },

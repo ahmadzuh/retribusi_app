@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
         labelText: 'Kata sandi',
         suffixIcon: IconButton(
           icon: Icon(
-              !_isShowPassword ? EvaIcons.lockOutline : EvaIcons.unlockOutline),
+              !_isShowPassword ? EvaIcons.eyeOffOutline : EvaIcons.eyeOutline),
           onPressed: () {
             setState(() {
               if (!_isShowPassword) {
