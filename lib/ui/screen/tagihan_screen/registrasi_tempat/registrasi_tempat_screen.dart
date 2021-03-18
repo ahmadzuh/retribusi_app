@@ -59,7 +59,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
           Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Text(
-              'Detail Registrasi Tempat',
+              'Registrasi Tempat',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
           ),
@@ -88,11 +88,6 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
           ),
         ],
       ),
-      // floatingActionButton: new FloatingActionButton(
-      //   onPressed: () {},
-      //   tooltip: 'Increment',
-      //   child: new Icon(Icons.send),
-      // ),
     );
   }
 
@@ -104,21 +99,31 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
         itemCount: registrasiTempatIndex.length,
         itemBuilder: (context, index) {
           RegistrasiTempat registrasiTempat = registrasiTempatIndex[index];
-          return InkWell(
-            onTap: () {
-              print('ID = ' + ' ${registrasiTempat.id}');
-              setState(() {
-                selectedIndex = index;
-              });
-            },
-            child: Container(
-                child: ListTile(
-                  title: Text(registrasiTempat.nmPedagang),
-                  subtitle: Text(registrasiTempat.nmAsset),
-                ),
-                decoration: BoxDecoration(
-                  color: selectedIndex == index ? Colors.grey[300] : null,
-                )),
+          return Padding(
+            padding: EdgeInsets.only(top: 8.0),
+            child: InkWell(
+              onTap: () {
+                print('ID = ' + ' ${registrasiTempat.id}');
+                setState(() {
+                  selectedIndex = index;
+                });
+              },
+              child: Container(
+                  child: Card(
+                    child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(registrasiTempat.nmPedagang),
+                            Text(registrasiTempat.nmAsset),
+                          ],
+                        )),
+                  ),
+                  decoration: BoxDecoration(
+                    color: selectedIndex == index ? Colors.grey[300] : null,
+                  )),
+            ),
           );
         },
       ),
