@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 import '../../../../bloc/view_model/area_model/area_tagih_model.dart';
 import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
 import '../../../../network/services/api_services.dart';
@@ -25,6 +26,18 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
     webservice = Webservice();
     retkel = Retkel();
     areaTagih = widget.areaTagih;
+  }
+
+  bool isLoading = false;
+
+  play() {
+    setState(() {
+      isLoading = true;
+    });
+    Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -59,7 +72,10 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
                     return _buildListView(retkel);
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: ListTileShimmer(
+                        isDisabledAvatar: true,
+                        isDisabledButton: true,
+                      ),
                     );
                   }
                 },

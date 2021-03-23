@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
 import '../../../../bloc/view_model/registrasi_tempat/regitrasi_tempat_model.dart';
 import '../../../../network/services/api_services.dart';
@@ -21,19 +22,6 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
   Retkel retkel;
   RegistrasiTempat registrasiTempat;
 
-  // var isSelected = false;
-  // var mycolor = Colors.white;
-
-  // void toggleSelection() {
-  //   if (isSelected) {
-  //     mycolor = Colors.white;
-  //     isSelected = false;
-  //   } else {
-  //     isSelected = true;
-  //     mycolor = Colors.grey[300];
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -44,6 +32,17 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
 
   bool isSelected = false;
   int selectedIndex;
+  bool isLoading = false;
+
+  play() {
+    setState(() {
+      isLoading = true;
+    });
+    Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +78,10 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                     return _buildListView(registrasiTempatElement);
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: ListTileShimmer(
+                        isDisabledAvatar: true,
+                        isDisabledButton: true,
+                      ),
                     );
                   }
                 },

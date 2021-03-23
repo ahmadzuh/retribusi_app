@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../../bloc/providers/user_provider.dart';
@@ -23,6 +24,17 @@ class _TagihanScreenState extends State<TagihanScreen> {
   void initState() {
     super.initState();
     webservice = Webservice();
+  }
+
+  bool isLoading = false;
+  play() {
+    setState(() {
+      isLoading = true;
+    });
+    Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -138,9 +150,7 @@ class _TagihanScreenState extends State<TagihanScreen> {
                             List<AreaTagih> profiles = snapshot.data;
                             return _buildListView(profiles);
                           } else {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return ListTileShimmer();
                           }
                         },
                       ),
