@@ -1,5 +1,6 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shimmer/flutter_shimmer.dart';
+import 'package:multi_select_item/multi_select_item.dart';
 import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
 import '../../../../bloc/view_model/registrasi_tempat/regitrasi_tempat_model.dart';
 import '../../../../network/services/api_services.dart';
@@ -21,6 +22,8 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
   Webservice webservice;
   Retkel retkel;
   RegistrasiTempat registrasiTempat;
+  List<RegistrasiTempat> registrasiTempatList;
+  MultiSelectController controller = new MultiSelectController();
 
   @override
   void initState() {
@@ -28,29 +31,42 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
     webservice = Webservice();
     retkel = widget.retkel;
     registrasiTempat = RegistrasiTempat();
+    isLoading = true;
+    webservice.registrasiTempat(retkel.id).then((value) {
+      setState(() {
+        isLoading = false;
+        registrasiTempatList = value;
+      });
+    });
   }
 
   bool isSelected = false;
   int selectedIndex;
   bool isLoading = false;
 
-  play() {
-    setState(() {
-      isLoading = true;
-    });
-    Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      isLoading = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.defaultAppBar(
-          title: widget.retkel == null
-              ? 'Registrasi Tempat'
-              : widget.retkel.nmKelompok),
+        title: widget.retkel == null
+            ? 'Registrasi Tempat'
+            : widget.retkel.nmKelompok +
+                "(" +
+                controller.selectedIndexes.length.toString() +
+                ")",
+        actions: (controller.isSelecting)
+            ? <Widget>[
+                IconButton(
+                  icon: Icon(Icons.select_all),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {},
+                )
+              ]
+            : <Widget>[],
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,71 +80,54 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
           ),
           Expanded(
             child: Container(
-              child: FutureBuilder(
-                future: webservice.registrasiTempat(retkel.id),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<RegistrasiTempat>> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text("Error: ${snapshot.error.toString()}"),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    List<RegistrasiTempat> registrasiTempatElement =
-                        snapshot.data;
-                    return _buildListView(registrasiTempatElement);
-                  } else {
-                    return Center(
-                      child: ListTileShimmer(
-                        isDisabledAvatar: true,
-                        isDisabledButton: true,
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
+                child: (isLoading)
+                    ? Center(
+                        child: Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [CircularProgressIndicator()],
+                        )),
+                      )
+                    : _buildListView()),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildListView(List<RegistrasiTempat> registrasiTempatIndex) {
+  Widget _buildListView() {
     return Container(
-        child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: ListView.builder(
-        itemCount: registrasiTempatIndex.length,
-        itemBuilder: (context, index) {
-          RegistrasiTempat registrasiTempat = registrasiTempatIndex[index];
-          return Padding(
-            padding: EdgeInsets.only(top: 8.0),
-            child: InkWell(
-              onTap: () {
-                print('ID = ' + ' ${registrasiTempat.id}');
-                setState(() {
-                  selectedIndex = index;
-                });
-              },
-              child: Container(
-                  child: Card(
-                    child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(registrasiTempat.nmPedagang),
-                            Text(registrasiTempat.nmAsset),
-                          ],
-                        )),
-                  ),
-                  decoration: BoxDecoration(
-                    color: selectedIndex == index ? Colors.grey[300] : null,
-                  )),
+        itemCount: registrasiTempatList.length,
+        itemBuilder: (BuildContext context, int index) {
+          RegistrasiTempat registrasiTempat = registrasiTempatList[index];
+          return MultiSelectItem(
+            isSelecting: controller.isSelecting,
+            onSelected: () {
+              setState(() {
+                controller.toggle(index);
+                print(controller.isSelected(index));
+              });
+            },
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: ListTile(
+                  title: Text(registrasiTempat.nmAsset),
+                  subtitle: Text(registrasiTempat.nmPedagang),
+                  trailing: (controller.isSelected(index))
+                      ? Icon(EvaIcons.checkmarkCircleOutline)
+                      : null,
+                ),
+              ),
+              decoration: controller.isSelected(index)
+                  ? new BoxDecoration(color: Colors.grey[300])
+                  : new BoxDecoration(),
             ),
           );
         },
       ),
-    ));
+    );
   }
 }
