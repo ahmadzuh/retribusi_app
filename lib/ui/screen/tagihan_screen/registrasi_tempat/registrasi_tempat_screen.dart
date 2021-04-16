@@ -57,11 +57,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
         actions: (controller.isSelecting)
             ? <Widget>[
                 IconButton(
-                  icon: Icon(Icons.select_all),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: Icon(Icons.send_to_mobile),
                   onPressed: () {},
                 )
               ]
@@ -77,6 +73,14 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
               'Registrasi Tempat',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
+          ),
+          Stack(
+            fit: StackFit.expand,
+            children: [
+              Row(
+                children: [],
+              )
+            ],
           ),
           Expanded(
             child: Container(
@@ -115,7 +119,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                 padding: const EdgeInsets.all(14.0),
                 child: ListTile(
                   title: Text(registrasiTempat.nmAsset),
-                  subtitle: Text(registrasiTempat.nmPedagang),
+                  subtitle: Text(registrasiTempat.totalRetribusi),
                   trailing: (controller.isSelected(index))
                       ? Icon(EvaIcons.checkmarkCircleOutline)
                       : null,
