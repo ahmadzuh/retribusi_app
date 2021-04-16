@@ -1,7 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:retribusi_app/ui/common/const/color.dart';
+import '../../common/const/color.dart';
 import '../../../bloc/providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {

@@ -122,8 +122,8 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                 ),
               ),
               decoration: controller.isSelected(index)
-                  ? new BoxDecoration(color: Colors.grey[300])
-                  : new BoxDecoration(),
+                  ? BoxDecoration(color: Colors.grey[300])
+                  : BoxDecoration(),
             ),
           );
         },
