@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_item/multi_select_item.dart';
+import 'package:retribusi_app/ui/common/const/color.dart';
 import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
 import '../../../../bloc/view_model/registrasi_tempat/regitrasi_tempat_model.dart';
 import '../../../../network/services/api_services.dart';
@@ -54,14 +55,6 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                 "(" +
                 controller.selectedIndexes.length.toString() +
                 ")",
-        actions: (controller.isSelecting)
-            ? <Widget>[
-                IconButton(
-                  icon: Icon(Icons.send_to_mobile),
-                  onPressed: () {},
-                )
-              ]
-            : <Widget>[],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,14 +66,6 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
               'Registrasi Tempat',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
-          ),
-          Stack(
-            fit: StackFit.expand,
-            children: [
-              Row(
-                children: [],
-              )
-            ],
           ),
           Expanded(
             child: Container(
@@ -94,9 +79,15 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                       )
                     : _buildListView()),
           ),
-          _bottomBar()
         ],
       ),
+      floatingActionButton: controller.isSelecting
+          ? FloatingActionButton(
+              backgroundColor: ColorBase.bluebase,
+              elevation: 0.0,
+              child: Icon(EvaIcons.arrowCircleRightOutline),
+              onPressed: () => print('Total'))
+          : null,
     );
   }
 
@@ -134,10 +125,5 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
         },
       ),
     );
-  }
-
-  Widget _bottomBar() {
-    return Container(
-        child: controller.isSelecting ? Text('data') : Text('Hello'));
   }
 }
