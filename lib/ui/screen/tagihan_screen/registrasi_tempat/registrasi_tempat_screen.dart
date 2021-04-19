@@ -1,7 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_item/multi_select_item.dart';
-import 'package:retribusi_app/ui/common/const/color.dart';
+import '../../../common/const/color.dart';
 import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
 import '../../../../bloc/view_model/registrasi_tempat/regitrasi_tempat_model.dart';
 import '../../../../network/services/api_services.dart';
@@ -10,10 +10,9 @@ import '../../../widget/custom_appbar.dart';
 class RegistrasiTempatScreen extends StatefulWidget {
   final Retkel retkel;
 
-  final String physicalStatus;
   final bool isSelected;
 
-  RegistrasiTempatScreen({this.retkel, this.physicalStatus, this.isSelected});
+  RegistrasiTempatScreen({this.retkel, this.isSelected});
 
   @override
   _RegistrasiTempatState createState() => _RegistrasiTempatState();
@@ -45,49 +44,95 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
   int selectedIndex;
   bool isLoading = false;
 
+  void selectAll() {
+    setState(() {
+      controller.toggleAll();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar.defaultAppBar(
-        title: widget.retkel == null
-            ? 'Registrasi Tempat'
-            : widget.retkel.nmKelompok +
-                "(" +
-                controller.selectedIndexes.length.toString() +
-                ")",
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 10.0),
-          Padding(
-            padding: EdgeInsets.only(left: 20.0),
-            child: Text(
-              'Registrasi Tempat',
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+    return WillPopScope(
+      onWillPop: () async {
+        //block app from quitting when selecting
+        var before = !controller.isSelecting;
+        setState(() {
+          controller.deselectAll();
+        });
+        return before;
+      },
+      child: Scaffold(
+        appBar: CustomAppBar.defaultAppBar(
+          title: widget.retkel == null
+              ? 'Registrasi Tempat'
+              : widget.retkel.nmKelompok +
+                  controller.selectedIndexes.length.toString(),
+          actions: (controller.isSelecting)
+              ? <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.select_all),
+                    onPressed: () {
+                      selectAll();
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {},
+                  )
+                ]
+              : <Widget>[],
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10.0),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0),
+              child: Text(
+                'Registrasi Tempat',
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(
-                child: (isLoading)
-                    ? Center(
-                        child: Container(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [CircularProgressIndicator()],
-                        )),
-                      )
-                    : _buildListView()),
-          ),
-        ],
+            Expanded(
+              child: Container(
+                  child: (isLoading)
+                      ? Center(
+                          child: Container(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [CircularProgressIndicator()],
+                          )),
+                        )
+                      : _buildListView()),
+            ),
+          ],
+        ),
+        bottomNavigationBar: controller.isSelecting
+            ? Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Container(
+                    child: SizedBox(
+                  width: double.infinity,
+                  height: 50.0,
+                  child: RawMaterialButton(
+                    elevation: 0.0,
+                    hoverElevation: 0.0,
+                    focusElevation: 0.0,
+                    highlightElevation: 0.0,
+                    fillColor: ColorBase.bluebase,
+                    child: Text(
+                      'data',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {},
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0),
+                    ),
+                  ),
+                )),
+              )
+            : null,
       ),
-      floatingActionButton: controller.isSelecting
-          ? FloatingActionButton(
-              backgroundColor: ColorBase.bluebase,
-              elevation: 0.0,
-              child: Icon(EvaIcons.arrowCircleRightOutline),
-              onPressed: () => print('Total'))
-          : null,
     );
   }
 
