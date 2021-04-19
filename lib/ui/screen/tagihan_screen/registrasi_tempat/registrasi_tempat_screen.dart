@@ -90,6 +90,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                       )
                     : _buildListView()),
           ),
+          _bottomBar()
         ],
       ),
     );
@@ -129,5 +130,10 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
         },
       ),
     );
+  }
+
+  Widget _bottomBar() {
+    return Container(
+        child: controller.isSelecting ? Text('data') : Text('Hello'));
   }
 }
