@@ -112,22 +112,59 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                 padding: EdgeInsets.all(16.0),
                 child: Container(
                     child: SizedBox(
-                  width: double.infinity,
                   height: 50.0,
-                  child: RawMaterialButton(
-                    elevation: 0.0,
-                    hoverElevation: 0.0,
-                    focusElevation: 0.0,
-                    highlightElevation: 0.0,
-                    fillColor: ColorBase.bluebase,
-                    child: Text(
-                      'data',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RawMaterialButton(
+                        elevation: 0.4,
+                        hoverElevation: 0.7,
+                        focusElevation: 0.6,
+                        highlightElevation: 0.4,
+                        fillColor: ColorBase.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                              height: 5.0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'Total Bayar',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 6.0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'Rp.15.000,-',
+                                style: TextStyle(fontSize: 14.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        onPressed: () {},
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      FloatingActionButton(
+                          backgroundColor: ColorBase.bluebase,
+                          child: Icon(EvaIcons.arrowCircleRightOutline),
+                          onPressed: () {})
+                    ],
                   ),
                 )),
               )
@@ -139,7 +176,8 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
   Widget _buildListView() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: ListView.builder(
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) => Divider(),
         itemCount: registrasiTempatList.length,
         itemBuilder: (BuildContext context, int index) {
           RegistrasiTempat registrasiTempat = registrasiTempatList[index];
@@ -155,6 +193,9 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: ListTile(
+                  dense: true,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
                   title: Text(registrasiTempat.nmAsset),
                   subtitle: Text(registrasiTempat.totalRetribusi),
                   trailing: (controller.isSelected(index))
@@ -163,7 +204,9 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                 ),
               ),
               decoration: controller.isSelected(index)
-                  ? BoxDecoration(color: Colors.grey[300])
+                  ? BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey[300])
                   : BoxDecoration(),
             ),
           );
