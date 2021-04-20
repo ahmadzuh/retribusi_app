@@ -1,7 +1,8 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../kelompok_retribusi/kelompok_retribusi_screen.dart';
 import '../../../../bloc/providers/user_provider.dart';
 import '../../../../bloc/view_model/area_model/area_tagih_model.dart';
 import '../../../../network/services/api_services.dart';
@@ -10,7 +11,6 @@ import '../../../common/const/dictionary.dart';
 import '../../../common/const/font.dart';
 import '../../../common/environment/environment.dart';
 import '../../../common/util/clock_time.dart';
-import '../kelompok_retribusi/kelompok_retribusi_screen.dart';
 
 class TagihanScreen extends StatefulWidget {
   @override
@@ -20,20 +20,23 @@ class TagihanScreen extends StatefulWidget {
 class _TagihanScreenState extends State<TagihanScreen> {
   Webservice webservice;
 
+  //area tagih
+  AreaTagih areaTagih;
+  List<AreaTagih> areaTagihList;
+
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
     webservice = Webservice();
-  }
-
-  bool isLoading = false;
-  play() {
-    setState(() {
-      isLoading = true;
-    });
-    Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      isLoading = false;
+    areaTagih = AreaTagih();
+    isLoading = true;
+    webservice.areaTagih().then((value) {
+      setState(() {
+        isLoading = false;
+        areaTagihList = value;
+      });
     });
   }
 
@@ -86,6 +89,7 @@ class _TagihanScreenState extends State<TagihanScreen> {
                 color: ColorBase.bluebase,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 1.0),
@@ -125,86 +129,65 @@ class _TagihanScreenState extends State<TagihanScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 24, right: 23.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
+                    padding: EdgeInsets.only(left: 24.0),
+                    child: Column(
+                      children: [
                         Text('Daftar Tagihan',
                             style: GoogleFonts.openSans(fontSize: 18.0)),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: 2.0,
+                          decoration: BoxDecoration(color: ColorBase.bluebase),
+                        ),
                       ],
                     ),
                   ),
                   Container(
                     child: Expanded(
-                      child: FutureBuilder(
-                        future: webservice.areaTagih(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<List<AreaTagih>> snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(
-                              child:
-                                  Text("Error: ${snapshot.error.toString()}"),
-                            );
-                          } else if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            List<AreaTagih> profiles = snapshot.data;
-                            return _buildListView(profiles);
-                          } else {
-                            return ListTileShimmer();
-                          }
-                        },
-                      ),
-                    ),
+                        child: Container(
+                      child: (isLoading)
+                          ? Center(
+                              child: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator.adaptive()
+                                ],
+                              ),
+                            ))
+                          : _buildListView(),
+                    )),
                   ),
                 ],
               ),
             ])));
   }
 
-  Widget _buildListView(List<AreaTagih> areatagihs) {
+  Widget _buildListView() {
     return Container(
         child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: ListView.builder(
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) => Divider(),
         itemBuilder: (context, index) {
-          AreaTagih areaTagih = areatagihs[index];
+          AreaTagih areaTagih = areaTagihList[index];
           return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      areaTagih.nmPasar,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    Text(areaTagih.kecamatan.nmKecamatan),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => KelompokRetribusiScreen(
-                                        areaTagih: areaTagih,
-                                      ))),
-                          child: Text(
-                            "Selengkapnya",
-                            style: TextStyle(color: Colors.green),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            padding: EdgeInsets.all(14),
+            child: ListTile(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => KelompokRetribusiScreen(
+                              areaTagih: areaTagih,
+                            ))),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                title: Text(areaTagih.nmPasar),
+                subtitle: Text(areaTagih.kecamatan.nmKecamatan),
+                trailing: Icon(EvaIcons.arrowCircleRightOutline)),
           );
         },
-        itemCount: areatagihs.length,
+        itemCount: areaTagihList.length,
       ),
     ));
   }

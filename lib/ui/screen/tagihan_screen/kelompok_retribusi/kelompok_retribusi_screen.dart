@@ -1,5 +1,8 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:retribusi_app/ui/common/const/color.dart';
 import '../../../../bloc/view_model/area_model/area_tagih_model.dart';
 import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
 import '../../../../network/services/api_services.dart';
@@ -30,16 +33,6 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
 
   bool isLoading = false;
 
-  play() {
-    setState(() {
-      isLoading = true;
-    });
-    Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      isLoading = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,12 +44,20 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 10.0),
-          Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                'Detail Tagihan',
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              )),
+          Container(
+            padding: EdgeInsets.only(left: 24.0),
+            child: Column(
+              children: [
+                Text('Detail Tagihan',
+                    style: GoogleFonts.openSans(fontSize: 18.0)),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: 2.0,
+                  decoration: BoxDecoration(color: ColorBase.bluebase),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: Container(
               child: FutureBuilder(
@@ -96,42 +97,18 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
           Retkel retkel = retkell[index];
           return Container(
             child: Padding(
-              padding: const EdgeInsets.only(),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        retkel.nmKelompok,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          RegistrasiTempatScreen(
-                                            retkel: retkel,
-                                          )));
-                            },
-                            child: Text(
-                              "Lihat",
-                              style: TextStyle(color: Colors.green),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+                padding: const EdgeInsets.only(),
+                child: ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistrasiTempatScreen(
+                                retkel: retkel,
+                              ))),
+                  title: Text(retkel.nmKelompok),
+                  subtitle: Text(retkel.jenisBangunan),
+                  trailing: Icon(EvaIcons.arrowCircleRightOutline),
+                )),
           );
         },
         itemCount: retkell.length,

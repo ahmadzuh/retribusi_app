@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:multi_select_item/multi_select_item.dart';
 import '../../../common/const/color.dart';
 import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
@@ -62,35 +63,23 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
         return before;
       },
       child: Scaffold(
-        appBar: CustomAppBar.defaultAppBar(
-          title: widget.retkel == null
-              ? 'Registrasi Tempat'
-              : widget.retkel.nmKelompok +
-                  controller.selectedIndexes.length.toString(),
-          actions: (controller.isSelecting)
-              ? <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.select_all),
-                    onPressed: () {
-                      selectAll();
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {},
-                  )
-                ]
-              : <Widget>[],
-        ),
+        appBar: CustomAppBar.defaultAppBar(title: 'Registrasi Tempat'),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10.0),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0),
-              child: Text(
-                'Registrasi Tempat',
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            Container(
+              padding: EdgeInsets.only(left: 24.0),
+              child: Column(
+                children: [
+                  Text('Registrasi Tempat',
+                      style: GoogleFonts.openSans(fontSize: 18.0)),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: 2.0,
+                    decoration: BoxDecoration(color: ColorBase.bluebase),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -149,7 +138,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                'Rp.15.000,-',
+                                controller.selectedIndexes.length.toString(),
                                 style: TextStyle(fontSize: 14.0),
                               ),
                             ),
@@ -186,7 +175,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
             onSelected: () {
               setState(() {
                 controller.toggle(index);
-                print(controller.isSelected(index));
+                print(selectedIndex = index);
               });
             },
             child: Container(
@@ -199,8 +188,11 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                   title: Text(registrasiTempat.nmAsset),
                   subtitle: Text(registrasiTempat.totalRetribusi),
                   trailing: (controller.isSelected(index))
-                      ? Icon(EvaIcons.checkmarkCircleOutline)
-                      : null,
+                      ? Icon(
+                          EvaIcons.checkmarkCircleOutline,
+                          color: ColorBase.bluebase,
+                        )
+                      : Icon(EvaIcons.plusCircle),
                 ),
               ),
               decoration: controller.isSelected(index)
