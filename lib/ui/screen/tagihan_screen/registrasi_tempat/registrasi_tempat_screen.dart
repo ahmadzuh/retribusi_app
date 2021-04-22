@@ -2,9 +2,9 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:multi_select_item/multi_select_item.dart';
+import 'package:retribusi_app/bloc/model/kelompok_model/kelompok_retribusi_model.dart';
+import 'package:retribusi_app/bloc/model/registrasi_tempat/regitrasi_tempat_model.dart';
 import '../../../common/const/color.dart';
-import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
-import '../../../../bloc/view_model/registrasi_tempat/regitrasi_tempat_model.dart';
 import '../../../../network/services/api_services.dart';
 import '../../../widget/custom_appbar.dart';
 
@@ -31,7 +31,6 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
     super.initState();
     webservice = Webservice();
     retkel = widget.retkel;
-    registrasiTempat = widget.registrasiTempat;
     registrasiTempat = RegistrasiTempat();
     isLoading = true;
     webservice.registrasiTempat(retkel.id).then((value) {

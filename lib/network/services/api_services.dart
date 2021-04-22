@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import '../../bloc/view_model/registrasi_tempat/regitrasi_tempat_model.dart';
-import '../../bloc/view_model/area_model/area_tagih_model.dart';
-import '../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
-import '../../bloc/view_model/login_model/login_user_model.dart';
+import 'package:retribusi_app/bloc/model/area_model/area_tagih_model.dart';
+import 'package:retribusi_app/bloc/model/kelompok_model/kelompok_retribusi_model.dart';
+import 'package:retribusi_app/bloc/model/login_model/login_user_model.dart';
+import 'package:retribusi_app/bloc/model/registrasi_tempat/regitrasi_tempat_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_url.dart';

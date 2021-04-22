@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:retribusi_app/bloc/model/login_model/login_user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../network/services/api_services.dart';
-import '../view_model/login_model/login_user_model.dart';
 
 enum Status { Authenticated, Authenticating, Unauthenticated }
 

@@ -1,9 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:retribusi_app/bloc/model/area_model/area_tagih_model.dart';
+import 'package:retribusi_app/bloc/model/kelompok_model/kelompok_retribusi_model.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
-import '../../../../bloc/view_model/area_model/area_tagih_model.dart';
-import '../../../../bloc/view_model/kelompok_model/kelompok_retribusi_model.dart';
 import '../../../../network/services/api_services.dart';
 import '../registrasi_tempat/registrasi_tempat_screen.dart';
 import '../../../widget/custom_appbar.dart';
@@ -22,6 +22,8 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
   Retkel retkel;
   AreaTagih areaTagih;
 
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,8 +31,6 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
     retkel = Retkel();
     areaTagih = widget.areaTagih;
   }
-
-  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
