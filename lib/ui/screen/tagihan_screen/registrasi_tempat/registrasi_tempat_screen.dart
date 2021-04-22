@@ -10,10 +10,10 @@ import '../../../widget/custom_appbar.dart';
 
 class RegistrasiTempatScreen extends StatefulWidget {
   final Retkel retkel;
-
   final bool isSelected;
+  final RegistrasiTempat registrasiTempat;
 
-  RegistrasiTempatScreen({this.retkel, this.isSelected});
+  RegistrasiTempatScreen({this.retkel, this.isSelected, this.registrasiTempat});
 
   @override
   _RegistrasiTempatState createState() => _RegistrasiTempatState();
@@ -31,6 +31,7 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
     super.initState();
     webservice = Webservice();
     retkel = widget.retkel;
+    registrasiTempat = widget.registrasiTempat;
     registrasiTempat = RegistrasiTempat();
     isLoading = true;
     webservice.registrasiTempat(retkel.id).then((value) {
@@ -44,12 +45,6 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
   bool isSelected = false;
   int selectedIndex;
   bool isLoading = false;
-
-  void selectAll() {
-    setState(() {
-      controller.toggleAll();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +69,6 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                 children: [
                   Text('Registrasi Tempat',
                       style: GoogleFonts.openSans(fontSize: 18.0)),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: 2.0,
-                    decoration: BoxDecoration(color: ColorBase.bluebase),
-                  ),
                 ],
               ),
             ),
@@ -186,7 +176,8 @@ class _RegistrasiTempatState extends State<RegistrasiTempatScreen> {
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
                   title: Text(registrasiTempat.nmAsset),
-                  subtitle: Text(registrasiTempat.totalRetribusi),
+                  subtitle:
+                      Text('Rp.' + registrasiTempat.totalRetribusi.toString()),
                   trailing: (controller.isSelected(index))
                       ? Icon(
                           EvaIcons.checkmarkCircleOutline,

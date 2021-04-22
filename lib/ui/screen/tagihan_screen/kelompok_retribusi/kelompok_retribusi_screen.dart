@@ -1,6 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:retribusi_app/ui/common/const/color.dart';
 import '../../../../bloc/view_model/area_model/area_tagih_model.dart';
@@ -69,14 +68,11 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
                       child: Text("Error: ${snapshot.error.toString()}"),
                     );
                   } else if (snapshot.connectionState == ConnectionState.done) {
-                    List<Retkel> retkel = snapshot.data;
-                    return _buildListView(retkel);
+                    List<Retkel> retkelList = snapshot.data;
+                    return _buildListView(retkelList);
                   } else {
                     return Center(
-                      child: ListTileShimmer(
-                        isDisabledAvatar: true,
-                        isDisabledButton: true,
-                      ),
+                      child: CircularProgressIndicator.adaptive(),
                     );
                   }
                 },
@@ -88,30 +84,27 @@ class _KelompokRetribusiState extends State<KelompokRetribusiScreen> {
     );
   }
 
-  Widget _buildListView(List<Retkel> retkell) {
+  Widget _buildListView(List<Retkel> retkelList) {
     return Container(
         child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: ListView.builder(
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) => Divider(),
         itemBuilder: (context, index) {
-          Retkel retkel = retkell[index];
-          return Container(
-            child: Padding(
-                padding: const EdgeInsets.only(),
-                child: ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegistrasiTempatScreen(
-                                retkel: retkel,
-                              ))),
-                  title: Text(retkel.nmKelompok),
-                  subtitle: Text(retkel.jenisBangunan),
-                  trailing: Icon(EvaIcons.arrowCircleRightOutline),
-                )),
+          Retkel retkel = retkelList[index];
+          return ListTile(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RegistrasiTempatScreen(
+                          retkel: retkel,
+                        ))),
+            title: Text(retkel.nmKelompok),
+            subtitle: Text(retkel.jenisBangunan),
+            trailing: Icon(EvaIcons.arrowCircleRightOutline),
           );
         },
-        itemCount: retkell.length,
+        itemCount: retkelList.length,
       ),
     ));
   }
