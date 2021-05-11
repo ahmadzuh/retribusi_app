@@ -86,7 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
             if (_formKey.currentState.validate()) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text('Login... ')));
+              
               user.loginUser(emailController.text, passwordController.text);
+            
             }
           },
           child: Ink(
@@ -108,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
+  }  
 
   textSection(user) {
     return Container(
@@ -152,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.blue,
             )),
         //icon: Icon(icon),
-      ),
+      ),  
     );
   }
 

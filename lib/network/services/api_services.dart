@@ -23,7 +23,7 @@ class Webservice {
     final response = await http.post(ApiUrl.loginUrl, body: userdata);
     if (response.statusCode == 200) {
       print(response.body);
-      return LoginUserModel.fromJson(json.decode(response.body));
+      return LoginUserModel .fromJson(json.decode(response.body));
     } else {
       //ToastUtils.show('Oops... Jaringan terputus cek koneksi anda');
     }
