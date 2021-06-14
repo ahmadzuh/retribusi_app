@@ -12,14 +12,14 @@ import '../../constants/base_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../constants/base_environment.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({key}) : super(key: key);
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignInScreenState createState() => _SignInScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   TextEditingController _emailController = TextEditingController();
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   backgroundColor: BaseColor.white,
                 ));
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/homeScreen', (route) => false);
+                  context, '/navbarScreen', (route) => false);
             }
             if (state is SignInFailure) {
               Navigator.pop(context);
@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 24.0),
                 FlatButton(
-                  color: Themes.colorPrimary,
+                  color: BaseColor.limeGreen,
                   padding: EdgeInsets.all(16),
                   child: Text(
                     'Login',

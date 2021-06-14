@@ -56,10 +56,10 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Image.asset('${BaseEnvironment.imageAssets}login.png',
                   width: 300.0, height: 300.0),
-              Text(
-                BaseString.appName,
-                style: TextStyle(fontSize: 30.0),
-              ),
+              // Text(
+              //   BaseString.appName,
+              //   style: TextStyle(fontSize: 30.0),
+              // ),
             ],
           )
         ],

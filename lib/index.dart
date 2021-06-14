@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:retribusi_app/screens/navbar_home_screen.dart/navbar_home_screen.dart';
+import 'screens/signin_screen/signin_screen.dart';
 
 import 'bloc/auth_bloc/auth_bloc.dart';
 import 'bloc/auth_bloc/auth_state.dart';
-import 'screens/home_screen/home_screen.dart';
-import 'screens/login_screen/login_screen.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -18,10 +18,10 @@ class _IndexState extends State<Index> {
       builder: (context, state) {
         print(state);
         if (state is Authenticated) {
-          return HomeScreen();
+          return NavbarHomeScreen();
         }
         if (state is Unauthenticated) {
-          return LoginScreen();
+          return SignInScreen();
         }
         return Container();
       },

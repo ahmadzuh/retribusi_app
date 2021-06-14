@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../helpers/profile_preferences.dart';
 import 'signin_event.dart';
 import 'signin_state.dart';
 
@@ -32,8 +33,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         final String token = response.data['token'].toString();
 
         if (response.data['status'] == true) {
-          //ProfilePreference.setProfile(response.data['user']['name']);
-
+          ProfilePreference.setProfile(response.data['data']['name']);
+          ProfilePreference.setEmail(response.data['data']['email']);
           _authBloc.add(LoggedIn(token: token));
           yield SignInSuccess(message: message);
         } else {
