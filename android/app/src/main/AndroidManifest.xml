@@ -6,7 +6,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="retribusi_app"
+        android:label="RETRIBUSI APP"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

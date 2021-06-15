@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:retribusi_app/screens/navbar_home_screen.dart/navbar_home_screen.dart';
+import 'screens/navbar_screen.dart/navbar_screen.dart';
 import 'screens/signin_screen/signin_screen.dart';
 
 import 'bloc/auth_bloc/auth_bloc.dart';
@@ -18,7 +18,7 @@ class _IndexState extends State<Index> {
       builder: (context, state) {
         print(state);
         if (state is Authenticated) {
-          return NavbarHomeScreen();
+          return NavbarScreen();
         }
         if (state is Unauthenticated) {
           return SignInScreen();

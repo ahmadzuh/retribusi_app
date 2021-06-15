@@ -1,19 +1,19 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/constants/base_environment.dart';
-import 'package:retribusi_app/screens/home_screen/home_screen.dart';
-import 'package:retribusi_app/screens/riwayat_screen.dart/riwayat_screen.dart';
-import 'package:retribusi_app/screens/setoran_screen/setoran_screen.dart';
-import 'package:retribusi_app/screens/setting_screen/settings_screen.dart';
+import '../../constants/base_environment.dart';
+import '../home_screen/home_screen.dart';
+import '../riwayat_screen.dart/riwayat_screen.dart';
+import '../setoran_screen/setoran_screen.dart';
+import '../setting_screen/settings_screen.dart';
 
-class NavbarHomeScreen extends StatefulWidget {
-  const NavbarHomeScreen({Key key}) : super(key: key);
+class NavbarScreen extends StatefulWidget {
+  const NavbarScreen({Key key}) : super(key: key);
 
   @override
-  _NavbarHomeScreenState createState() => _NavbarHomeScreenState();
+  _NavbarScreenState createState() => _NavbarScreenState();
 }
 
-class _NavbarHomeScreenState extends State<NavbarHomeScreen> {
+class _NavbarScreenState extends State<NavbarScreen> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),

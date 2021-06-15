@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/screens/navbar_home_screen.dart/navbar_home_screen.dart';
+import 'package:retribusi_app/screens/setting_screen/edit_screen.dart';
+import '../screens/navbar_screen.dart/navbar_screen.dart';
 import '../screens/signin_screen/signin_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/splash_screen/splash_screen.dart';
@@ -23,11 +24,10 @@ Route generateRoute(RouteSettings settings) {
     case '/loginScreen':
       return _pageRoute(builder: SignInScreen(), settings: settings);
     case '/navbarScreen':
-      return _pageRoute(builder: NavbarHomeScreen(), settings: settings);
+      return _pageRoute(builder: NavbarScreen(), settings: settings);
     case '/homeScreen':
       return _pageRoute(builder: HomeScreen(), settings: settings);
-    // case '/settingScreen':
-    //   return _pageRoute(builder: SettingScreen(), settings: settings);
-
+    case '/editScreen':
+      return _pageRoute(builder: EditScreen(), settings: settings);
   }
 }
