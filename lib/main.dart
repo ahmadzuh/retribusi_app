@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:retribusi_app/constants/base_color.dart';
+import 'constants/base_color.dart';
 import 'bloc/signin_bloc/signin_bloc.dart';
 import 'helpers/routes.dart';
 import 'repositories/auth_repo.dart';

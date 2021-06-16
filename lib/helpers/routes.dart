@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:retribusi_app/screens/setting_screen/edit_screen.dart';
+import '../screens/setting_screen/edit_screen.dart';
 import '../screens/navbar_screen.dart/navbar_screen.dart';
 import '../screens/signin_screen/signin_screen.dart';
 import '../screens/home_screen/home_screen.dart';

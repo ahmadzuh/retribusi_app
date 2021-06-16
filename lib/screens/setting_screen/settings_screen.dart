@@ -1,8 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:retribusi_app/components/loading_dialog.dart';
-import 'package:retribusi_app/helpers/profile_preferences.dart';
+import '../../components/loading_dialog.dart';
+import '../../helpers/profile_preferences.dart';
 import '../../bloc/signin_bloc/signin_bloc.dart';
 import '../../bloc/signin_bloc/signin_event.dart';
 import '../../constants/base_color.dart';
