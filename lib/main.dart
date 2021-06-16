@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:retribusi_app/constants/base_color.dart';
 import 'bloc/signin_bloc/signin_bloc.dart';
 import 'helpers/routes.dart';
 import 'repositories/auth_repo.dart';
@@ -30,12 +31,10 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
         title: BaseString.appName,
-        theme: ThemeData(
-          primaryColor: Color(0xff27AE60),
-          textTheme: GoogleFonts.latoTextTheme(
-            Theme.of(context).textTheme,
-          ),
-        ),
+        theme: Theme.of(context).copyWith(
+            appBarTheme: Theme.of(context).appBarTheme.copyWith(
+                color: BaseColor.limeGreen, brightness: Brightness.light),
+            primaryColor: BaseColor.limeGreen),
         initialRoute: '/',
         onGenerateRoute: generateRoute,
       ),
